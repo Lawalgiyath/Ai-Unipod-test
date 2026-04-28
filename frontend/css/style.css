@@ -191,6 +191,8 @@ button { cursor: pointer; border: none; background: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 1001;
 }
 .nav__logo {
   display: flex;
@@ -198,6 +200,8 @@ button { cursor: pointer; border: none; background: none; }
   gap: 16px;
   opacity: 0;
   animation: fadeInDown 0.8s var(--ease) 0.2s forwards;
+  position: relative;
+  z-index: 1002;
 }
 .nav__logo-lockup {
   display: flex;
@@ -208,6 +212,8 @@ button { cursor: pointer; border: none; background: none; }
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 1003;
 }
 .nav__logo-mark {
   width: 36px;
@@ -239,6 +245,8 @@ button { cursor: pointer; border: none; background: none; }
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  position: relative;
+  z-index: 1003;
 }
 .nav__logo-partnership {
   font-family: var(--font-ui);
@@ -259,6 +267,8 @@ button { cursor: pointer; border: none; background: none; }
   gap: 40px;
   opacity: 0;
   animation: fadeInDown 0.8s var(--ease) 0.4s forwards;
+  position: relative;
+  z-index: 1002;
 }
 .nav__link {
   font-family: var(--font-ui);
@@ -301,6 +311,8 @@ button { cursor: pointer; border: none; background: none; }
   transition: background var(--duration-fast), transform var(--duration-fast);
   opacity: 0;
   animation: fadeInDown 0.8s var(--ease) 0.6s forwards;
+  position: relative;
+  z-index: 1002;
 }
 .nav__cta:hover { background: var(--undp-blue-dark); transform: translateY(-1px); }
 
@@ -310,6 +322,8 @@ button { cursor: pointer; border: none; background: none; }
   gap: 5px;
   width: 28px;
   cursor: pointer;
+  position: relative;
+  z-index: 1002;
 }
 .nav__hamburger span {
   display: block;
@@ -707,6 +721,7 @@ button { cursor: pointer; border: none; background: none; }
 .page-hero {
   padding: 200px 0 120px;
   position: relative;
+  z-index: 1;
 }
 .page-hero--dark { background: var(--near-black); color: var(--white); }
 .page-hero__label { margin-bottom: 32px; }

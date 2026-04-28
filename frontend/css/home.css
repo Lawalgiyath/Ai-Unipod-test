@@ -9,11 +9,13 @@
   align-items: flex-end;
   padding-bottom: 100px;
   overflow: hidden;
+  z-index: 1;
 }
 #heroCanvas {
   position: absolute;
   inset: 0;
   width: 100%; height: 100%;
+  z-index: 0;
 }
 .hero__overlay {
   position: absolute;
@@ -25,6 +27,7 @@
     rgba(10,20,40,0.85) 100%
   );
   pointer-events: none;
+  z-index: 1;
 }
 .hero__content {
   position: relative;

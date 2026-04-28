@@ -10,10 +10,18 @@
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .partners-hero { background: var(--near-black); padding: 200px 0 100px; }
+    .partners-hero { background: var(--near-black); padding: 200px 0 100px; position: relative; z-index: 1; overflow: hidden; }
     @media (max-width: 900px) {
       .partners-hero > .container > div { grid-template-columns: 1fr !important; }
       .partners-hero svg { width: 120px; height: 120px; margin: 0 auto; }
+    }
+    .partners-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+    .partners-hero svg {
+      position: relative;
+      z-index: 2;
     }
     .partner-full-card {
       display: grid;

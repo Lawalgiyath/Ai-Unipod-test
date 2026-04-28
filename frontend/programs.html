@@ -11,12 +11,17 @@
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .programs-hero { background: var(--near-black); padding: 200px 0 120px; position: relative; overflow: hidden; }
+    .programs-hero { background: var(--near-black); padding: 200px 0 120px; position: relative; overflow: hidden; z-index: 1; }
     .programs-hero__grid {
       position: absolute; inset: 0;
       background-image: linear-gradient(rgba(4,104,177,0.08) 1px, transparent 1px),
                         linear-gradient(90deg, rgba(4,104,177,0.08) 1px, transparent 1px);
       background-size: 60px 60px;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
     }
     .program-detail {
       padding: 120px 0;
