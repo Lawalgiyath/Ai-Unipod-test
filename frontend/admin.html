@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — AI UniPod Lagos CMS</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="images/unipods Logo.png">
+  <link rel="apple touch icon" href="images/unipods Logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { background: #F4F4F2; font-family: var(--font-body); }
+    .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+    .admin-sidebar {
+      background: var(--near-black);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .admin-sidebar__brand {
+      padding: 28px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .admin-sidebar__brand h1 {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: white;
+    }
+    .admin-sidebar__brand p {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+    .admin-nav-item:hover { color: white; background: rgba(255,255,255,0.05); }
+    .admin-nav-item.active { color: white; border-left-color: var(--undp-blue); background: rgba(4,104,177,0.1); }
+    .admin-sidebar__footer {
+      margin-top: auto;
+      padding: 20px 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .admin-sidebar__footer a {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      transition: color 0.2s;
+    }
+    .admin-sidebar__footer a:hover { color: white; }
+    .admin-main {
+      padding: 40px;
+      overflow-y: auto;
+    }
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .admin-header h2 {
+      font-family: var(--font-ui);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+
+    /* Stats cards */
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: white;
+      padding: 24px;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .stat-card__label {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .stat-card__num {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    /* Table panel */
+    .table-panel {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+    .table-panel__header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--off-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .table-panel__header h3 {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .table-panel__body { overflow-x: auto; }
+
+    /* Image preview */
+    .img-preview {
+      width: 64px; height: 48px;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .img-preview-thumb {
+      width: 48px; height: 48px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    /* Form row */
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+    /* Quick links */
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .quick-link {
+      background: white;
+      padding: 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: box-shadow 0.2s;
+    }
+    .quick-link:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+
+    .badge-published { background: #dcfce7; color: #16a34a; font-size: 0.7rem; padding: 3px 10px; border-radius: 40px; font-family: var(--font-ui); font-weight: 600; }
+    .badge-draft { background: #fef9c3; color: #ca8a04; font-size: 0.7rem; padding: 3px 10px; border-radius: 40px; font-family: var(--font-ui); font-weight: 600; }
+
+    @media (max-width: 900px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-sidebar { height: auto; position: static; flex-direction: row; flex-wrap: wrap; }
+      .stats-cards, .quick-links { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar__brand">
+      <h1>AI UniPod CMS</h1>
+      <p>UNILAG × UNDP</p>
+    </div>
+    <div style="padding: 16px 0;">
+      <div class="admin-nav-item active" data-panel="dashboard">
+        Dashboard
+      </div>
+      <div class="admin-nav-item" data-panel="news">
+        News Articles
+      </div>
+      <div class="admin-nav-item" data-panel="events">
+        Events
+      </div>
+      <div class="admin-nav-item" data-panel="programs">
+        Programs
+      </div>
+      <div class="admin-nav-item" data-panel="gallery">
+        Gallery
+      </div>
+      <div class="admin-nav-item" data-panel="partners">
+        Partners
+      </div>
+    </div>
+    <div class="admin-sidebar__footer">
+      <a href="index.html">← View Website</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <div class="admin-panel active" id="panel-dashboard">
+      <div class="admin-header">
+        <div>
+          <h2>Dashboard</h2>
+          <p style="font-size:0.85rem;color:var(--gray);margin-top:4px">AI UniPod Lagos — Content Management System</p>
+        </div>
+        <div style="font-family:var(--font-ui);font-size:0.8rem;color:var(--gray)">
+          Last login: <strong style="color:var(--near-black)">Today</strong>
+        </div>
+      </div>
+      <div class="stats-cards" id="dashStats">
+        <div class="stat-card"><div class="stat-card__label">News Articles</div><div class="stat-card__num" id="countNews">–</div></div>
+        <div class="stat-card"><div class="stat-card__label">Events</div><div class="stat-card__num" id="countEvents">–</div></div>
+        <div class="stat-card"><div class="stat-card__label">Programs</div><div class="stat-card__num" id="countPrograms">–</div></div>
+        <div class="stat-card"><div class="stat-card__label">Gallery Items</div><div class="stat-card__num" id="countGallery">–</div></div>
+      </div>
+      <div class="quick-links">
+        <div class="quick-link" onclick="switchPanel('news')">Manage News</div>
+        <div class="quick-link" onclick="switchPanel('events')">Manage Events</div>
+        <div class="quick-link" onclick="switchPanel('programs')">Manage Programs</div>
+        <div class="quick-link" onclick="switchPanel('gallery')">Manage Gallery</div>
+        <div class="quick-link" onclick="switchPanel('partners')">Manage Partners</div>
+        <a class="quick-link" href="index.html" target="_blank">View Website</a>
+      </div>
+      <div class="table-panel">
+        <div class="table-panel__header">
+          <h3>Recent News</h3>
+          <button class="data-table__btn data-table__btn--edit" onclick="switchPanel('news')">Manage All →</button>
+        </div>
+        <div class="table-panel__body">
+          <table class="data-table" id="dashRecentNews"><thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Date</th></tr></thead><tbody id="dashNewsBody"><tr><td colspan="4" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWS PANEL -->
+    <div class="admin-panel" id="panel-news">
+      <div class="admin-header">
+        <h2>News Articles</h2>
+        <button class="btn btn--primary" style="font-size:0.8rem;padding:12px 24px;" onclick="openModal('newsModal')">+ Add Article</button>
+      </div>
+      <div class="table-panel">
+        <div class="table-panel__body">
+          <table class="data-table"><thead><tr><th>Cover</th><th>Title</th><th>Category</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody id="newsTableBody"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENTS PANEL -->
+    <div class="admin-panel" id="panel-events">
+      <div class="admin-header">
+        <h2>Events</h2>
+        <button class="btn btn--primary" style="font-size:0.8rem;padding:12px 24px;" onclick="openModal('eventModal')">+ Add Event</button>
+      </div>
+      <div class="table-panel">
+        <div class="table-panel__body">
+          <table class="data-table"><thead><tr><th>Cover</th><th>Title</th><th>Category</th><th>Date</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead><tbody id="eventsTableBody"><tr><td colspan="7" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRAMS PANEL -->
+    <div class="admin-panel" id="panel-programs">
+      <div class="admin-header">
+        <h2>Programs</h2>
+        <button class="btn btn--primary" style="font-size:0.8rem;padding:12px 24px;" onclick="openModal('programModal')">+ Add Program</button>
+      </div>
+      <div class="table-panel">
+        <div class="table-panel__body">
+          <table class="data-table"><thead><tr><th>Cover</th><th>Title</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead><tbody id="programsTableBody"><tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY PANEL -->
+    <div class="admin-panel" id="panel-gallery">
+      <div class="admin-header">
+        <h2>Gallery</h2>
+        <button class="btn btn--primary" style="font-size:0.8rem;padding:12px 24px;" onclick="openModal('galleryModal')">+ Add Photo</button>
+      </div>
+      <div class="table-panel">
+        <div class="table-panel__body">
+          <table class="data-table"><thead><tr><th>Preview</th><th>Title</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead><tbody id="galleryTableBody"><tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNERS PANEL -->
+    <div class="admin-panel" id="panel-partners">
+      <div class="admin-header">
+        <h2>Partners</h2>
+        <button class="btn btn--primary" style="font-size:0.8rem;padding:12px 24px;" onclick="openModal('partnerModal')">+ Add Partner</button>
+      </div>
+      <div class="table-panel">
+        <div class="table-panel__body">
+          <table class="data-table"><thead><tr><th>Logo</th><th>Name</th><th>Category</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead><tbody id="partnersTableBody"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ─── MODALS ─────────────────────────────────────────────── -->
+
+<!-- NEWS MODAL -->
+<div class="modal-overlay" id="newsModal">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="newsModalTitle">Add News Article</h3>
+      <button class="modal__close" onclick="closeModal('newsModal')">✕</button>
+    </div>
+    <form id="newsForm">
+      <input type="hidden" id="newsId">
+      <div class="form-group"><label class="form-label">Title *</label><input class="form-input" id="newsTitle" required placeholder="Article title"></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Slug</label><input class="form-input" id="newsSlug" placeholder="url-friendly-slug"></div>
+        <div class="form-group"><label class="form-label">Category *</label>
+          <select class="form-select" id="newsCategory">
+            <option>Announcement</option><option>Milestone</option><option>Partnership</option><option>Research</option><option>Media Coverage</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Cover Image URL</label><input class="form-input" id="newsCoverImage" placeholder="https://..."></div>
+      <div class="form-group"><label class="form-label">Excerpt *</label><textarea class="form-textarea" id="newsExcerpt" rows="3" placeholder="Short summary (shown on listings)" required></textarea></div>
+      <div class="form-group"><label class="form-label">Body (HTML supported)</label><textarea class="form-textarea" id="newsBody" rows="8" placeholder="<p>Full article content...</p>"></textarea></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Published Date</label><input class="form-input" type="datetime-local" id="newsDate"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;padding-top:28px;">
+          <label class="form-check"><input type="checkbox" id="newsFeatured"> Featured on homepage</label>
+          <label class="form-check"><input type="checkbox" id="newsPublished" checked> Published</label>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;">
+        <button type="button" class="btn btn--outline" onclick="closeModal('newsModal')">Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Article</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- EVENTS MODAL -->
+<div class="modal-overlay" id="eventModal">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="eventModalTitle">Add Event</h3>
+      <button class="modal__close" onclick="closeModal('eventModal')">✕</button>
+    </div>
+    <form id="eventForm">
+      <input type="hidden" id="eventId">
+      <div class="form-group"><label class="form-label">Title *</label><input class="form-input" id="eventTitle" required placeholder="Event title"></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Category</label>
+          <select class="form-select" id="eventCategory">
+            <option>Workshop</option><option>Bootcamp</option><option>Panel Discussion</option><option>Open Day</option><option>Launch</option><option>Hackathon</option><option>Networking</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="eventLocation" placeholder="Venue, City"></div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Start Date & Time *</label><input class="form-input" type="datetime-local" id="eventDate" required></div>
+        <div class="form-group"><label class="form-label">End Date & Time</label><input class="form-input" type="datetime-local" id="eventEndDate"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Cover Image URL</label><input class="form-input" id="eventCoverImage" placeholder="https://..."></div>
+      <div class="form-group"><label class="form-label">Description (HTML supported)</label><textarea class="form-textarea" id="eventDesc" rows="5" placeholder="<p>Event description...</p>"></textarea></div>
+      <div class="form-group"><label class="form-label">Registration Link</label><input class="form-input" id="eventRegLink" placeholder="https://..."></div>
+      <div style="display:flex;gap:20px;margin-bottom:20px;">
+        <label class="form-check"><input type="checkbox" id="eventFeatured"> Featured event</label>
+        <label class="form-check"><input type="checkbox" id="eventPublished" checked> Published</label>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button type="button" class="btn btn--outline" onclick="closeModal('eventModal')">Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- PROGRAMS MODAL -->
+<div class="modal-overlay" id="programModal">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="programModalTitle">Add Program</h3>
+      <button class="modal__close" onclick="closeModal('programModal')">✕</button>
+    </div>
+    <form id="programForm">
+      <input type="hidden" id="programId">
+      <div class="form-group"><label class="form-label">Title *</label><input class="form-input" id="programTitle" required placeholder="Program title"></div>
+      <div class="form-group"><label class="form-label">Subtitle</label><input class="form-input" id="programSubtitle" placeholder="Short descriptor"></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Category</label>
+          <select class="form-select" id="programCategory">
+            <option>AI Training</option><option>Bootcamp</option><option>Startup Support</option><option>Research</option><option>Fellowship</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-select" id="programStatus">
+            <option>Active</option><option>Upcoming</option><option>Completed</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Cover Image URL</label><input class="form-input" id="programCoverImage" placeholder="https://..."></div>
+      <div class="form-group"><label class="form-label">Description (HTML supported)</label><textarea class="form-textarea" id="programDesc" rows="6" placeholder="<p>Program description...</p>"></textarea></div>
+      <div class="form-group"><label class="form-label">Application Link</label><input class="form-input" id="programAppLink" placeholder="https://..."></div>
+      <div style="margin-bottom:20px;"><label class="form-check"><input type="checkbox" id="programPublished" checked> Published</label></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button type="button" class="btn btn--outline" onclick="closeModal('programModal')">Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Program</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- GALLERY MODAL -->
+<div class="modal-overlay" id="galleryModal">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="galleryModalTitle">Add Photo</h3>
+      <button class="modal__close" onclick="closeModal('galleryModal')">✕</button>
+    </div>
+    <form id="galleryForm">
+      <input type="hidden" id="galleryId">
+      <div class="form-group"><label class="form-label">Image URL *</label><input class="form-input" id="galleryImgUrl" required placeholder="https://..." oninput="updateGalleryPreview(this.value)"></div>
+      <div id="galleryPreview" style="margin-bottom:20px;display:none;"><img id="galleryPreviewImg" style="max-height:200px;width:auto;border-radius:4px;" src="" alt="preview"></div>
+      <div class="form-group"><label class="form-label">Caption / Title *</label><input class="form-input" id="galleryTitle" required placeholder="Image caption"></div>
+      <div class="form-group"><label class="form-label">Category</label>
+        <select class="form-select" id="galleryCategory">
+          <option>Facility</option><option>Events</option><option>Programs</option><option>People</option><option>Partnerships</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tags / Keywords <span style="font-weight:400;color:var(--gray);font-size:0.85rem;">(comma-separated, for admin organization only)</span></label>
+        <input class="form-input" id="galleryTags" placeholder="e.g., ai-lab, maker-space, opening-day, workshop">
+        <small style="display:block;margin-top:6px;color:var(--gray);font-size:0.8rem;">Tags help organize and search images in the admin panel. Not visible to website visitors.</small>
+      </div>
+      <div style="margin-bottom:20px;"><label class="form-check"><input type="checkbox" id="galleryPublished" checked> Published</label></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button type="button" class="btn btn--outline" onclick="closeModal('galleryModal')">Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Photo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- PARTNERS MODAL -->
+<div class="modal-overlay" id="partnerModal">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title" id="partnerModalTitle">Add Partner</h3>
+      <button class="modal__close" onclick="closeModal('partnerModal')">✕</button>
+    </div>
+    <form id="partnerForm">
+      <input type="hidden" id="partnerId">
+      <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="partnerName" required placeholder="Organization name"></div>
+      <div class="form-group"><label class="form-label">Logo URL</label><input class="form-input" id="partnerLogoUrl" placeholder="https://..."></div>
+      <div class="form-group"><label class="form-label">Website</label><input class="form-input" id="partnerWebsite" placeholder="https://..."></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Category</label>
+          <select class="form-select" id="partnerCategory">
+            <option>UN Agency</option><option>University</option><option>Government</option><option>Private Sector</option><option>NGO</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Display Order</label><input class="form-input" type="number" id="partnerOrder" placeholder="1" min="1"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="partnerDesc" rows="3" placeholder="Brief description of the partner..."></textarea></div>
+      <div style="margin-bottom:20px;"><label class="form-check"><input type="checkbox" id="partnerPublished" checked> Published</label></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button type="button" class="btn btn--outline" onclick="closeModal('partnerModal')">Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Partner</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal__header"><h3 class="modal__title">Confirm Delete</h3><button class="modal__close" onclick="closeModal('deleteModal')">✕</button></div>
+    <p style="margin-bottom:32px;color:var(--dark-gray)">Are you sure you want to delete this item? This cannot be undone.</p>
+    <div style="display:flex;gap:12px;justify-content:flex-end;">
+      <button class="btn btn--outline" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn btn--primary" style="background:#dc2626;border-color:#dc2626;" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ─── AUTHENTICATION PROTECTION ────────────────────────────────
+import { protectAdminPage, signOut, getCurrentUser } from './js/auth.js';
+
+// Protect this page - redirect to login if not authenticated
+if (!protectAdminPage()) {
+  throw new Error('Unauthorized access');
+}
+
+// Display current user
+const user = getCurrentUser();
+if (user) {
+  console.log('Logged in as:', user.email);
+}
+
+// Add logout functionality
+const logoutBtn = document.createElement('button');
+logoutBtn.textContent = 'Logout';
+logoutBtn.className = 'btn btn--outline';
+logoutBtn.style.cssText = 'font-size:0.8rem;padding:8px 16px;';
+logoutBtn.onclick = signOut;
+
+const adminHeader = document.querySelector('.admin-header');
+if (adminHeader) {
+  adminHeader.appendChild(logoutBtn);
+}
+</script>
+
+<script src="js/mock-data.js"></script>
+<script src="js/main.js"></script>
+<script>
+// ─── SIDEBAR NAV ──────────────────────────────────────────────
+function switchPanel(name) {
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + name)?.classList.add('active');
+  document.querySelector(`[data-panel="${name}"]`)?.classList.add('active');
+  // Load data
+  if (name === 'news') loadNewsTable();
+  else if (name === 'events') loadEventsTable();
+  else if (name === 'programs') loadProgramsTable();
+  else if (name === 'gallery') loadGalleryTable();
+  else if (name === 'partners') loadPartnersTable();
+  else if (name === 'dashboard') loadDashboard();
+}
+document.querySelectorAll('.admin-nav-item').forEach(item => {
+  item.addEventListener('click', () => switchPanel(item.dataset.panel));
+});
+
+// ─── FORMAT DATE ──────────────────────────────────────────────
+function fmt(d) { if (!d) return '—'; return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); }
+function badge(published) {
+  return published ? '<span class="badge-published">Published</span>' : '<span class="badge-draft">Draft</span>';
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────
+async function loadDashboard() {
+  const [news, events, programs, gallery] = await Promise.all([
+    API.get('news', {limit:5}), API.get('events', {limit:5}), API.get('programs', {limit:5}), API.get('gallery', {limit:5})
+  ]);
+  document.getElementById('countNews').textContent = news.total || 0;
+  document.getElementById('countEvents').textContent = events.total || 0;
+  document.getElementById('countPrograms').textContent = programs.total || 0;
+  document.getElementById('countGallery').textContent = gallery.total || 0;
+
+  const tbody = document.getElementById('dashNewsBody');
+  const items = news.data || [];
+  tbody.innerHTML = items.map(a => `
+    <tr>
+      <td><strong>${a.title}</strong></td>
+      <td><span class="tag tag--blue">${a.category||'—'}</span></td>
+      <td>${badge(a.published)}</td>
+      <td>${fmt(a.published_date)}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray)">No articles yet</td></tr>';
+}
+
+// ─── NEWS TABLE ───────────────────────────────────────────────
+async function loadNewsTable() {
+  const data = await API.get('news', { limit: 50 });
+  const tbody = document.getElementById('newsTableBody');
+  tbody.innerHTML = (data.data || []).map(a => `
+    <tr>
+      <td>${a.cover_image ? `<img class="img-preview" src="${a.cover_image}" alt="">` : '—'}</td>
+      <td><strong>${a.title}</strong></td>
+      <td><span class="tag tag--blue">${a.category||'—'}</span></td>
+      <td>${badge(a.published)}</td>
+      <td>${fmt(a.published_date)}</td>
+      <td><div class="data-table__actions">
+        <button class="data-table__btn data-table__btn--edit" onclick="editNews('${a.id}')">Edit</button>
+        <button class="data-table__btn data-table__btn--delete" onclick="confirmDelete('news','${a.id}')">Delete</button>
+      </div></td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">No articles yet. Add one!</td></tr>';
+}
+
+async function editNews(id) {
+  const a = await API.getOne('news', id);
+  document.getElementById('newsId').value = a.id;
+  document.getElementById('newsTitle').value = a.title || '';
+  document.getElementById('newsSlug').value = a.slug || '';
+  document.getElementById('newsCategory').value = a.category || 'Announcement';
+  document.getElementById('newsCoverImage').value = a.cover_image || '';
+  document.getElementById('newsExcerpt').value = a.excerpt || '';
+  document.getElementById('newsBody').value = a.body || '';
+  document.getElementById('newsDate').value = a.published_date ? new Date(a.published_date).toISOString().slice(0,16) : '';
+  document.getElementById('newsFeatured').checked = !!a.featured;
+  document.getElementById('newsPublished').checked = !!a.published;
+  document.getElementById('newsModalTitle').textContent = 'Edit Article';
+  openModal('newsModal');
+}
+
+document.getElementById('newsForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('newsId').value;
+  const data = {
+    title: document.getElementById('newsTitle').value,
+    slug: document.getElementById('newsSlug').value || document.getElementById('newsTitle').value.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''),
+    category: document.getElementById('newsCategory').value,
+    cover_image: document.getElementById('newsCoverImage').value,
+    excerpt: document.getElementById('newsExcerpt').value,
+    body: document.getElementById('newsBody').value,
+    published_date: document.getElementById('newsDate').value ? new Date(document.getElementById('newsDate').value).toISOString() : new Date().toISOString(),
+    featured: document.getElementById('newsFeatured').checked,
+    published: document.getElementById('newsPublished').checked,
+  };
+  try {
+    if (id) await API.put('news', id, data);
+    else await API.post('news', data);
+    showToast(id ? 'Article updated!' : 'Article created!', 'success');
+    closeModal('newsModal');
+    e.target.reset();
+    document.getElementById('newsId').value = '';
+    document.getElementById('newsModalTitle').textContent = 'Add News Article';
+    loadNewsTable();
+  } catch(err) { showToast('Error saving article', 'error'); }
+});
+
+// ─── EVENTS TABLE ─────────────────────────────────────────────
+async function loadEventsTable() {
+  const data = await API.get('events', { limit: 50 });
+  const tbody = document.getElementById('eventsTableBody');
+  tbody.innerHTML = (data.data || []).map(ev => `
+    <tr>
+      <td>${ev.cover_image ? `<img class="img-preview" src="${ev.cover_image}" alt="">` : '—'}</td>
+      <td><strong>${ev.title}</strong></td>
+      <td><span class="tag tag--blue">${ev.category||'—'}</span></td>
+      <td>${fmt(ev.event_date)}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${ev.location||'—'}</td>
+      <td>${badge(ev.published)}</td>
+      <td><div class="data-table__actions">
+        <button class="data-table__btn data-table__btn--edit" onclick="editEvent('${ev.id}')">Edit</button>
+        <button class="data-table__btn data-table__btn--delete" onclick="confirmDelete('events','${ev.id}')">Delete</button>
+      </div></td>
+    </tr>
+  `).join('') || '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--gray)">No events yet.</td></tr>';
+}
+
+async function editEvent(id) {
+  const ev = await API.getOne('events', id);
+  document.getElementById('eventId').value = ev.id;
+  document.getElementById('eventTitle').value = ev.title || '';
+  document.getElementById('eventCategory').value = ev.category || 'Workshop';
+  document.getElementById('eventLocation').value = ev.location || '';
+  document.getElementById('eventDate').value = ev.event_date ? new Date(ev.event_date).toISOString().slice(0,16) : '';
+  document.getElementById('eventEndDate').value = ev.end_date ? new Date(ev.end_date).toISOString().slice(0,16) : '';
+  document.getElementById('eventCoverImage').value = ev.cover_image || '';
+  document.getElementById('eventDesc').value = ev.description || '';
+  document.getElementById('eventRegLink').value = ev.registration_link || '';
+  document.getElementById('eventFeatured').checked = !!ev.featured;
+  document.getElementById('eventPublished').checked = !!ev.published;
+  document.getElementById('eventModalTitle').textContent = 'Edit Event';
+  openModal('eventModal');
+}
+
+document.getElementById('eventForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('eventId').value;
+  const data = {
+    title: document.getElementById('eventTitle').value,
+    category: document.getElementById('eventCategory').value,
+    location: document.getElementById('eventLocation').value,
+    event_date: document.getElementById('eventDate').value ? new Date(document.getElementById('eventDate').value).toISOString() : null,
+    end_date: document.getElementById('eventEndDate').value ? new Date(document.getElementById('eventEndDate').value).toISOString() : null,
+    cover_image: document.getElementById('eventCoverImage').value,
+    description: document.getElementById('eventDesc').value,
+    registration_link: document.getElementById('eventRegLink').value,
+    featured: document.getElementById('eventFeatured').checked,
+    published: document.getElementById('eventPublished').checked,
+  };
+  try {
+    if (id) await API.put('events', id, data);
+    else await API.post('events', data);
+    showToast(id ? 'Event updated!' : 'Event created!', 'success');
+    closeModal('eventModal');
+    e.target.reset(); document.getElementById('eventId').value = '';
+    document.getElementById('eventModalTitle').textContent = 'Add Event';
+    loadEventsTable();
+  } catch(err) { showToast('Error saving event', 'error'); }
+});
+
+// ─── PROGRAMS TABLE ───────────────────────────────────────────
+async function loadProgramsTable() {
+  const data = await API.get('programs', { limit: 50 });
+  const tbody = document.getElementById('programsTableBody');
+  tbody.innerHTML = (data.data || []).map(p => `
+    <tr>
+      <td>${p.cover_image ? `<img class="img-preview" src="${p.cover_image}" alt="">` : '—'}</td>
+      <td><strong>${p.title}</strong><br><small style="color:var(--gray)">${p.subtitle||''}</small></td>
+      <td>${p.category||'—'}</td>
+      <td><span class="program-card__status program-card__status--${(p.status||'active').toLowerCase()}" style="display:inline-block">${p.status||'Active'}</span></td>
+      <td><div class="data-table__actions">
+        <button class="data-table__btn data-table__btn--edit" onclick="editProgram('${p.id}')">Edit</button>
+        <button class="data-table__btn data-table__btn--delete" onclick="confirmDelete('programs','${p.id}')">Delete</button>
+      </div></td>
+    </tr>
+  `).join('') || '<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">No programs yet.</td></tr>';
+}
+
+async function editProgram(id) {
+  const p = await API.getOne('programs', id);
+  document.getElementById('programId').value = p.id;
+  document.getElementById('programTitle').value = p.title || '';
+  document.getElementById('programSubtitle').value = p.subtitle || '';
+  document.getElementById('programCategory').value = p.category || 'AI Training';
+  document.getElementById('programStatus').value = p.status || 'Active';
+  document.getElementById('programCoverImage').value = p.cover_image || '';
+  document.getElementById('programDesc').value = p.description || '';
+  document.getElementById('programAppLink').value = p.application_link || '';
+  document.getElementById('programPublished').checked = !!p.published;
+  document.getElementById('programModalTitle').textContent = 'Edit Program';
+  openModal('programModal');
+}
+
+document.getElementById('programForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('programId').value;
+  const data = {
+    title: document.getElementById('programTitle').value,
+    subtitle: document.getElementById('programSubtitle').value,
+    category: document.getElementById('programCategory').value,
+    status: document.getElementById('programStatus').value,
+    cover_image: document.getElementById('programCoverImage').value,
+    description: document.getElementById('programDesc').value,
+    application_link: document.getElementById('programAppLink').value,
+    published: document.getElementById('programPublished').checked,
+  };
+  try {
+    if (id) await API.put('programs', id, data);
+    else await API.post('programs', data);
+    showToast(id ? 'Program updated!' : 'Program created!', 'success');
+    closeModal('programModal');
+    e.target.reset(); document.getElementById('programId').value = '';
+    document.getElementById('programModalTitle').textContent = 'Add Program';
+    loadProgramsTable();
+  } catch(err) { showToast('Error saving program', 'error'); }
+});
+
+// ─── GALLERY TABLE ────────────────────────────────────────────
+async function loadGalleryTable() {
+  const data = await API.get('gallery', { limit: 100 });
+  const tbody = document.getElementById('galleryTableBody');
+  tbody.innerHTML = (data.data || []).map(g => `
+    <tr>
+      <td>${g.image_url ? `<img class="img-preview-thumb" src="${g.image_url}" alt="">` : '—'}</td>
+      <td>
+        <strong>${g.title||'—'}</strong>
+        ${g.tags ? `<div style="margin-top:4px;font-size:0.75rem;color:var(--gray);">${g.tags.split(',').map(t => `<span style="background:var(--off-white);padding:2px 6px;border-radius:3px;margin-right:4px;">${t.trim()}</span>`).join('')}</div>` : ''}
+      </td>
+      <td><span class="tag">${g.category||'—'}</span></td>
+      <td>${badge(g.published)}</td>
+      <td><div class="data-table__actions">
+        <button class="data-table__btn data-table__btn--edit" onclick="editGallery('${g.id}')">Edit</button>
+        <button class="data-table__btn data-table__btn--delete" onclick="confirmDelete('gallery','${g.id}')">Delete</button>
+      </div></td>
+    </tr>
+  `).join('') || '<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">No photos yet.</td></tr>';
+}
+
+async function editGallery(id) {
+  const g = await API.getOne('gallery', id);
+  document.getElementById('galleryId').value = g.id;
+  document.getElementById('galleryImgUrl').value = g.image_url || '';
+  document.getElementById('galleryTitle').value = g.title || '';
+  document.getElementById('galleryCategory').value = g.category || 'Facility';
+  document.getElementById('galleryTags').value = g.tags || '';
+  document.getElementById('galleryPublished').checked = !!g.published;
+  if (g.image_url) { document.getElementById('galleryPreviewImg').src = g.image_url; document.getElementById('galleryPreview').style.display = 'block'; }
+  document.getElementById('galleryModalTitle').textContent = 'Edit Photo';
+  openModal('galleryModal');
+}
+
+function updateGalleryPreview(url) {
+  const prev = document.getElementById('galleryPreview');
+  const img = document.getElementById('galleryPreviewImg');
+  if (url) { img.src = url; prev.style.display = 'block'; }
+  else prev.style.display = 'none';
+}
+
+document.getElementById('galleryForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('galleryId').value;
+  const data = {
+    image_url: document.getElementById('galleryImgUrl').value,
+    title: document.getElementById('galleryTitle').value,
+    category: document.getElementById('galleryCategory').value,
+    tags: document.getElementById('galleryTags').value,
+    published: document.getElementById('galleryPublished').checked,
+  };
+  try {
+    if (id) await API.put('gallery', id, data);
+    else await API.post('gallery', data);
+    showToast(id ? 'Photo updated!' : 'Photo added!', 'success');
+    closeModal('galleryModal');
+    e.target.reset(); document.getElementById('galleryId').value = '';
+    document.getElementById('galleryPreview').style.display = 'none';
+    document.getElementById('galleryModalTitle').textContent = 'Add Photo';
+    loadGalleryTable();
+  } catch(err) { showToast('Error saving photo', 'error'); }
+});
+
+// ─── PARTNERS TABLE ───────────────────────────────────────────
+async function loadPartnersTable() {
+  const data = await API.get('partners', { limit: 50 });
+  const tbody = document.getElementById('partnersTableBody');
+  tbody.innerHTML = (data.data || []).sort((a,b) => (a.order||99)-(b.order||99)).map(p => `
+    <tr>
+      <td>${p.logo_url ? `<img class="img-preview" src="${p.logo_url}" alt="" style="height:36px;width:auto;object-fit:contain;">` : '—'}</td>
+      <td><strong>${p.name}</strong></td>
+      <td>${p.category||'—'}</td>
+      <td>${p.order||'—'}</td>
+      <td>${badge(p.published)}</td>
+      <td><div class="data-table__actions">
+        <button class="data-table__btn data-table__btn--edit" onclick="editPartner('${p.id}')">Edit</button>
+        <button class="data-table__btn data-table__btn--delete" onclick="confirmDelete('partners','${p.id}')">Delete</button>
+      </div></td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">No partners yet.</td></tr>';
+}
+
+async function editPartner(id) {
+  const p = await API.getOne('partners', id);
+  document.getElementById('partnerId').value = p.id;
+  document.getElementById('partnerName').value = p.name || '';
+  document.getElementById('partnerLogoUrl').value = p.logo_url || '';
+  document.getElementById('partnerWebsite').value = p.website || '';
+  document.getElementById('partnerCategory').value = p.category || 'UN Agency';
+  document.getElementById('partnerOrder').value = p.order || '';
+  document.getElementById('partnerDesc').value = p.description || '';
+  document.getElementById('partnerPublished').checked = !!p.published;
+  document.getElementById('partnerModalTitle').textContent = 'Edit Partner';
+  openModal('partnerModal');
+}
+
+document.getElementById('partnerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('partnerId').value;
+  const data = {
+    name: document.getElementById('partnerName').value,
+    logo_url: document.getElementById('partnerLogoUrl').value,
+    website: document.getElementById('partnerWebsite').value,
+    category: document.getElementById('partnerCategory').value,
+    order: parseInt(document.getElementById('partnerOrder').value) || 99,
+    description: document.getElementById('partnerDesc').value,
+    published: document.getElementById('partnerPublished').checked,
+  };
+  try {
+    if (id) await API.put('partners', id, data);
+    else await API.post('partners', data);
+    showToast(id ? 'Partner updated!' : 'Partner added!', 'success');
+    closeModal('partnerModal');
+    e.target.reset(); document.getElementById('partnerId').value = '';
+    document.getElementById('partnerModalTitle').textContent = 'Add Partner';
+    loadPartnersTable();
+  } catch(err) { showToast('Error saving partner', 'error'); }
+});
+
+// ─── DELETE CONFIRM ───────────────────────────────────────────
+let pendingDelete = null;
+function confirmDelete(table, id) {
+  pendingDelete = { table, id };
+  openModal('deleteModal');
+}
+document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+  if (!pendingDelete) return;
+  try {
+    await API.delete(pendingDelete.table, pendingDelete.id);
+    showToast('Item deleted', 'success');
+    closeModal('deleteModal');
+    // Reload current table
+    const active = document.querySelector('.admin-nav-item.active')?.dataset?.panel;
+    if (active) switchPanel(active);
+  } catch(e) { showToast('Error deleting', 'error'); }
+  pendingDelete = null;
+});
+
+// ─── INIT ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+</body>
+</html>

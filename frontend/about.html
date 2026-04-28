@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — AI UniPod Lagos | UNILAG × UNDP</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="images/unipods Logo.png">
+  <link rel="apple touch icon" href="images/unipods Logo.png">
+  <meta name="description" content="Learn about the AI UniPod at the University of Lagos — Nigeria's first AI-themed University Innovation Pod, part of UNDP's Timbuktoo pan-African initiative.">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .about-hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 120px;
+      overflow: hidden;
+    }
+    .about-hero__bg {
+      position: absolute; inset: 0;
+      background: var(--near-black);
+    }
+    .about-hero__bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+    .about-hero__bg canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+    }
+    .about-hero__content {
+      position: relative; z-index: 2;
+      width: 100%;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .mission-visual {
+      position: relative;
+    }
+    .mission-visual__img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+    .mission-visual__accent {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      width: 200px;
+      height: 200px;
+      background: rgba(4, 104, 177, 0.08);
+      border: 1px solid rgba(4, 104, 177, 0.2);
+      border-radius: 2px;
+      z-index: -1;
+    }
+    .mission-visual__badge {
+      position: absolute;
+      top: 32px;
+      right: -20px;
+      background: white;
+      padding: 20px 24px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+      max-width: 200px;
+      border-left: 3px solid var(--undp-blue);
+    }
+    .mission-visual__badge p {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--dark-gray);
+      line-height: 1.5;
+    }
+    .mission-visual__badge strong {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--undp-blue);
+      margin-top: 8px;
+      font-style: normal;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+    }
+    .team-card__img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      filter: grayscale(0.2);
+      transition: filter 0.3s;
+    }
+    .team-card:hover .team-card__img { filter: none; }
+    .team-card__name {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .team-card__role {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--undp-blue);
+      margin-bottom: 12px;
+    }
+    .team-card__bio {
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+      line-height: 1.65;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--light-gray);
+    }
+    .value-item {
+      background: var(--white);
+      padding: 48px 40px;
+      transition: background 0.3s;
+    }
+    .value-item:hover { background: var(--undp-blue); }
+    .value-item:hover .value-item__icon,
+    .value-item:hover .value-item__title,
+    .value-item:hover .value-item__desc { color: white !important; }
+    .value-item__icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 20px;
+      color: var(--undp-blue);
+      transition: color 0.3s;
+    }
+    .value-item__icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    .value-item__title {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      transition: color 0.3s;
+    }
+    .value-item__desc {
+      font-size: 0.875rem;
+      color: var(--dark-gray);
+      line-height: 1.6;
+      transition: color 0.3s;
+    }
+    .photo-mosaic {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 0.9fr;
+      grid-template-rows: 280px 280px;
+      gap: 8px;
+    }
+    .photo-mosaic__item {
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .photo-mosaic__item:first-child {
+      grid-row: 1 / 3;
+    }
+    .photo-mosaic__item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease);
+    }
+    .photo-mosaic__item:hover img { transform: scale(1.04); }
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6.5px; bottom: 0;
+      width: 1px;
+      background: var(--light-gray);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 60px;
+      padding-left: 32px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--undp-blue);
+      border: 2px solid white;
+      box-shadow: 0 0 0 3px rgba(4,104,177,0.2);
+    }
+    .timeline-item__date {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--undp-blue);
+      margin-bottom: 8px;
+    }
+    .timeline-item__title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .timeline-item__body {
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+      line-height: 1.7;
+    }
+    @media (max-width: 1024px) {
+      .mission-grid { grid-template-columns: 1fr; gap: 60px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .photo-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px; }
+      .photo-mosaic__item:first-child { grid-row: auto; }
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader__logo">AI <span>UniPod</span> Lagos</div>
+  <div class="loader__bar"><div class="loader__progress"></div></div>
+</div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<!-- NAV -->
+<nav class="nav nav--light" id="mainNav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <!-- Primary Logos (UniPod + UNDP) -->
+        <div class="nav__logo-primary">
+          <!-- UniPod Logo -->
+          <div class="nav__logo-mark" style="background: transparent; width: auto; height: auto; border-radius: 0;">
+            <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto;">
+          </div>
+          
+          <!-- UNDP Logo -->
+          <img src="images/undp_logo.png" 
+               alt="UNDP" 
+               style="height: 100px; width: auto; margin-left: 20px;">
+        </div>
+        
+        <!-- Divider -->
+        <div class="nav__logo-divider"></div>
+        
+        <!-- Secondary Logos (Partners) -->
+        <div class="nav__logo-secondary">
+          <span class="nav__logo-partnership">In Partnership With</span>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 class="nav__logo-university"
+                 style="height: 44px;">
+            <img src="images/Nigerias_Coat_of_arms.png" 
+                 alt="Federal Government of Nigeria" 
+                 class="nav__logo-university"
+                 style="height: 48px;">
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 class="nav__logo-university"
+                 style="height: 79px;">
+          </div>
+        </div>
+      </a>
+      <div class="nav__links">
+        <a href="about.html" class="nav__link active">About</a>
+        <a href="programs.html" class="nav__link">Programs</a>
+        <a href="news.html" class="nav__link">News</a>
+        <a href="events.html" class="nav__link">Events</a>
+        <a href="gallery.html" class="nav__link">Gallery</a>
+        <a href="partners.html" class="nav__link">Partners</a>
+      </div>
+      <a href="programs.html#apply" class="nav__cta">Apply Now</a>
+      <div class="nav__hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile">
+  <button class="nav__mobile-close">✕</button>
+  <a href="about.html" class="nav__mobile-link">About</a>
+  <a href="programs.html" class="nav__mobile-link">Programs</a>
+  <a href="news.html" class="nav__mobile-link">News</a>
+  <a href="events.html" class="nav__mobile-link">Events</a>
+  <a href="gallery.html" class="nav__mobile-link">Gallery</a>
+  <a href="partners.html" class="nav__mobile-link">Partners</a>
+</div>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="about-hero__bg">
+    <img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_6_2026-03-11_09-17-05-1024x742.jpg" alt="AI UniPod facility">
+  </div>
+  <div class="about-hero__content">
+    <div class="container">
+      <div class="section-label reveal" style="margin-bottom: 24px;">
+        <div class="section-label__line" style="background:rgba(255,255,255,0.4)"></div>
+        <span class="section-label__text" style="color:rgba(255,255,255,0.5)">About the AI UniPod</span>
+      </div>
+      <h1 class="t-h1 reveal reveal-delay-1" style="color: white; max-width: 800px; margin-bottom: 32px;">
+        Nigeria's First.<br><em class="t-serif-italic" style="color: var(--gold-light)">Africa's Catalyst.</em>
+      </h1>
+      <p class="t-lead reveal reveal-delay-2" style="color: rgba(255,255,255,0.7); max-width: 600px;">
+        The UNILAG AI UniPod is where Africa's next generation of innovators, engineers, and entrepreneurs build the AI-powered solutions that will define the continent's future.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS IT -->
+<section class="section">
+  <div class="container">
+    <div class="mission-grid">
+      <div>
+        <div class="section-label reveal"><div class="section-label__line"></div><span class="section-label__text">What is the AI UniPod?</span></div>
+        <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom: 32px;">
+          An Innovation Hub<br><em class="t-serif-italic text-blue">Built for the Future</em>
+        </h2>
+        <p class="t-lead reveal reveal-delay-2" style="margin-bottom: 32px;">
+          The AI UniPod is a state-of-the-art University Innovation Pod situated at the University of Lagos, Commercial Road, Akoka Campus. It is the first AI-themed UniPod in Nigeria, and one of 13 UniPods established across Africa by UNDP's Timbuktoo Initiative.
+        </p>
+        <p class="t-body reveal reveal-delay-3" style="margin-bottom: 24px;">
+          The facility is a joint initiative of the University of Lagos (UNILAG) and the United Nations Development Programme (UNDP) Nigeria, grounded in a Memorandum of Understanding signed in March 2025. It is operated through UNILAG's NITDA Information Technology Development Agency hub (Nithub).
+        </p>
+        <p class="t-body reveal reveal-delay-3" style="margin-bottom: 48px;">
+          Architecturally designed by PODEX Associates Limited, the pod's spaces artistically flow into each other — embodying the communal essence of African heritage while maintaining the functionality of a dynamic collaborative hub. Plants, African artworks, and natural light create a calming, welcoming, and inspiring environment.
+        </p>
+        <div class="badge-strip reveal">
+          <span class="tag tag--blue">AI Lab</span>
+          <span class="tag tag--blue">Maker Space</span>
+          <span class="tag tag--blue">Design Studio</span>
+          <span class="tag tag--blue">Pitch Garage</span>
+          <span class="tag tag--blue">Co-Working</span>
+        </div>
+      </div>
+      <div class="mission-visual reveal reveal-delay-2">
+        <img class="mission-visual__img" src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg" alt="AI UniPod interior">
+        <div class="mission-visual__accent"></div>
+        <div class="mission-visual__badge">
+          <p>"I love it. I absolutely love it. I love the greenery, it's so warm and inviting."</p>
+          <strong>Prof. Folasade Ogunsola<br>VC, UNILAG</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section style="background: var(--near-black); padding: 100px 0;">
+  <div class="container--narrow">
+    <div class="pullquote-with-image reveal">
+      <div class="pullquote-image-frame">
+        <div class="pullquote-image-accent"></div>
+        <img src="../images/adminster/Ahunna Eziakonwa.jpg" alt="Ms. Ahunna Eziakonwa" class="pullquote-image">
+      </div>
+      <div class="pullquote" style="border-color: rgba(255,255,255,0.1);">
+        <p class="pullquote__text" style="color:white;">
+          "Will Africa build AI for inclusion, or will others build it for us? We must own our data. We must own our minds."
+        </p>
+        <p class="pullquote__attr" style="color: rgba(255,255,255,0.4)">Ahunna Eziakonwa — UN Assistant Secretary-General, UNDP Regional Director for Africa</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO MOSAIC -->
+<section class="section">
+  <div class="container">
+    <div class="section-label reveal" style="margin-bottom: 48px;">
+      <div class="section-label__line"></div>
+      <span class="section-label__text">The Space</span>
+    </div>
+    <div class="photo-mosaic reveal">
+      <div class="photo-mosaic__item"><img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg" alt="Main collaborative area"></div>
+      <div class="photo-mosaic__item"><img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_5_2026-03-11_09-17-05-1024x682.jpg" alt="Open house event"></div>
+      <div class="photo-mosaic__item"><img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_14_2026-03-11_09-17-05-1024x764.jpg" alt="AI Lab area"></div>
+      <div class="photo-mosaic__item"><img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_6_2026-03-11_09-17-05-1024x742.jpg" alt="Design lab space"></div>
+      <div class="photo-mosaic__item"><img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_8_2026-03-11_09-17-05-1024x770.jpg" alt="Collaboration space"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION + VALUES -->
+<section class="section section--off-white">
+  <div class="container">
+    <div class="section-label reveal" style="margin-bottom: 16px;"><div class="section-label__line"></div><span class="section-label__text">Mission</span></div>
+    <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom: 80px; max-width: 700px;">
+      To turn ideas into prototypes,<br>
+      <em class="t-serif-italic text-blue">prototypes into startups,</em><br>
+      startups into industries.
+    </h2>
+    <div class="values-grid reveal">
+      <div class="value-item">
+        <div class="value-item__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- AI Sovereignty - Brain/Circuit -->
+            <path d="M24 8C15.163 8 8 15.163 8 24s7.163 16 16 16 16-7.163 16-16S32.837 8 24 8z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="24" cy="18" r="2" fill="currentColor"/>
+            <circle cx="18" cy="24" r="2" fill="currentColor"/>
+            <circle cx="24" cy="24" r="2" fill="currentColor"/>
+            <circle cx="30" cy="24" r="2" fill="currentColor"/>
+            <circle cx="20" cy="30" r="2" fill="currentColor"/>
+            <circle cx="28" cy="30" r="2" fill="currentColor"/>
+            <line x1="24" y1="18" x2="18" y2="24" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="24" y1="18" x2="24" y2="24" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="24" y1="18" x2="30" y2="24" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="18" y1="24" x2="20" y2="30" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="24" y1="24" x2="20" y2="30" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="24" y1="24" x2="28" y2="30" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="30" y1="24" x2="28" y2="30" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="value-item__title">AI Sovereignty</div>
+        <p class="value-item__desc">Developing AI built by Africans, for Africa — data-sovereign, culturally grounded, and locally impactful.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-item__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Inclusive Innovation - Growing Plant/Sprout -->
+            <path d="M24 40V24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24 24C24 24 18 20 18 14C18 10 20 8 24 8C24 8 24 14 24 24Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M24 24C24 24 30 20 30 14C30 10 28 8 24 8C24 8 24 14 24 24Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <ellipse cx="24" cy="40" rx="8" ry="2" fill="currentColor" opacity="0.3"/>
+            <circle cx="20" cy="16" r="1.5" fill="currentColor"/>
+            <circle cx="28" cy="16" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="value-item__title">Inclusive Innovation</div>
+        <p class="value-item__desc">Ensuring that AI benefits every Nigerian — not just the connected few. Equity is engineered in from the start.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-item__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ecosystem Building - Connected Network -->
+            <circle cx="24" cy="24" r="4" fill="currentColor"/>
+            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="36" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="12" cy="36" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="36" cy="36" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            <line x1="14" y1="14" x2="20" y2="22" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="34" y1="14" x2="28" y2="22" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="14" y1="34" x2="20" y2="26" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="34" y1="34" x2="28" y2="26" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="value-item__title">Ecosystem Building</div>
+        <p class="value-item__desc">Bridging academia, government, industry, and the private sector to create self-sustaining innovation ecosystems.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-item__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Scale & Impact - Rocket Launch -->
+            <path d="M24 8L28 20L40 24L28 28L24 40L20 28L8 24L20 20L24 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="24" cy="24" r="3" fill="currentColor"/>
+            <path d="M16 32L12 36M32 32L36 36M24 38V42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="value-item__title">Scale & Impact</div>
+        <p class="value-item__desc">Moving from lab to launch. Supporting early-stage ventures that create jobs and solve real development challenges.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <div class="container">
+    <div class="sidebar-layout">
+      <div>
+        <div class="section-label reveal"><div class="section-label__line"></div><span class="section-label__text">Journey</span></div>
+        <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom: 64px;">
+          How We Got Here
+        </h2>
+        <div class="timeline reveal reveal-delay-2">
+          <div class="timeline-item">
+            <div class="timeline-item__date">April 2024</div>
+            <div class="timeline-item__title">The First Conversation</div>
+            <p class="timeline-item__body">Vice-Chancellor Prof. Folasade Ogunsola hosts UNDP Resident Representative Elsie Attafuah at UNILAG. UNILAG expresses readiness to host the first AI UniPod in Nigeria.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-item__date">July 10, 2024</div>
+            <div class="timeline-item__title">Groundbreaking Ceremony</div>
+            <p class="timeline-item__body">Official groundbreaking on Commercial Road, Akoka Campus. UNDP's Ms. Ahunna Eziakonwa delivers the public lecture: "Nigeria: The Anchor of Africa's Economic Transformation." The pod is expected by December 2024.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-item__date">October 2024</div>
+            <div class="timeline-item__title">Construction Contract Awarded</div>
+            <p class="timeline-item__body">PODEX Associates Limited, the architectural firm bringing the UniPod to life, is engaged. UNDP issues a procurement notice for remodelling, repurposing, and furnishing the space.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-item__date">March 18, 2025</div>
+            <div class="timeline-item__title">MOU Signed</div>
+            <p class="timeline-item__body">UNILAG and UNDP officially sign the Memorandum of Understanding, cementing their partnership. PODEX presents final designs featuring an AI Lab, Design Studio, Pitch Garage, Maker Space, and Collaboration Areas — delivery date: June 2025.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-item__date">September 2025</div>
+            <div class="timeline-item__title">National Activation Workshop</div>
+            <p class="timeline-item__body">UNILAG joins 7 other universities at UNDP's UniPod Activation Workshop in Ikoyi, Lagos. A comprehensive roadmap, SOPs, and visibility framework are finalized for Nigeria's Cohort 1 UniPods.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-item__date">December 2025</div>
+            <div class="timeline-item__title">TETFund–UNDP Partnership</div>
+            <p class="timeline-item__body">TETFund and UNDP sign a landmark national MoU to extend UniPod infrastructure to universities and polytechnics nationwide — targeting 500,000+ students and 2,000 startups.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-item__date">March 10–12, 2026</div>
+            <div class="timeline-item__title">Open House Days</div>
+            <p class="timeline-item__body">The completed AI UniPod opens its doors to UNILAG's academic community. Ahead of its official launch, students, staff, and UNDP tour the state-of-the-art facility.</p>
+          </div>
+          <div class="timeline-item" style="padding-bottom: 0;">
+            <div class="timeline-item__date">2026 — Official Launch</div>
+            <div class="timeline-item__title">The Story Continues…</div>
+            <p class="timeline-item__body">The AI UniPod officially launches. The first innovation cohort is onboarded. Africa's AI future begins here.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div style="background: var(--off-white); padding: 48px 40px; margin-bottom: 32px;">
+          <div class="section-label" style="margin-bottom: 24px;"><div class="section-label__line"></div><span class="section-label__text">Partners</span></div>
+          <div style="display:flex; flex-direction:column; gap: 20px;">
+            <div>
+              <img src="images/undp_logo.png" alt="UNDP" style="height:72px; margin-bottom:8px">
+              <p style="font-size:0.85rem; color: var(--dark-gray); line-height:1.5">United Nations Development Programme — lead international partner and funder through the Timbuktoo Initiative.</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <img src="images/UNILAG LOGO.png" alt="University of Lagos" style="height:44px; margin-bottom:8px">
+              <p style="font-size:0.85rem; color: var(--dark-gray); line-height:1.5">Host institution and academic partner. Nigeria's premier university, ranked #1 in Nigeria (2026 THE Rankings).</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+              <img src="images/tetfund_logo.png" alt="TETFund" style="height:72px; margin-bottom:8px">
+              <p style="font-size:0.85rem; color: var(--dark-gray); line-height:1.5">Tertiary Education Trust Fund — scaling UniPod infrastructure nationwide through a 2025 MoU partnership.</p>
+            </div>
+          </div>
+        </div>
+        <div style="background: var(--undp-blue); padding: 48px 40px; color: white;">
+          <div class="t-label" style="color: rgba(255,255,255,0.5); margin-bottom: 16px; letter-spacing: 0.2em;">Location</div>
+          <p style="font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.85);">
+            UNILAG AI UniPod<br>
+            Commercial Road<br>
+            Akoka Campus, University of Lagos<br>
+            Lagos, Nigeria
+          </p>
+          <div class="divider" style="margin: 24px 0; background: rgba(255,255,255,0.15)"></div>
+          <div class="t-label" style="color: rgba(255,255,255,0.5); margin-bottom: 16px;">Contact</div>
+          <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Nithub, UNILAG<br>Dr. Victor Odumuyiwa, Director</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY PEOPLE -->
+<section class="section section--off-white">
+  <div class="container">
+    <div class="section-label reveal"><div class="section-label__line"></div><span class="section-label__text">Key People</span></div>
+    <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom: 64px;">The Minds Behind<br><em class="t-serif-italic text-blue">the Movement</em></h2>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <img class="team-card__img" src="https://unilag.edu.ng/wp-content/uploads/2025/03/MG_0917-1024x607.jpg" alt="Prof. Folasade Ogunsola">
+        <div class="team-card__name">Prof. Folasade T. Ogunsola</div>
+        <div class="team-card__role">Vice-Chancellor, UNILAG</div>
+        <p class="team-card__bio">OON, FAS. Professor Ogunsola championed the UniPod from the very first conversation, committing UNILAG as Nigeria's pioneer AI innovation university.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-1">
+        <img class="team-card__img" src="https://unilag.edu.ng/wp-content/uploads/2025/03/MG_0925-1024x575.jpg" alt="Elsie Attafuah">
+        <div class="team-card__name">Elsie G. Attafuah</div>
+        <div class="team-card__role">Resident Representative, UNDP Nigeria</div>
+        <p class="team-card__bio">Ms. Attafuah has been the driving force of UNDP Nigeria's partnership with UNILAG, signing the MOU and co-leading the national UniPod activation strategy.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-2">
+        <img class="team-card__img" src="../images/adminster/odumuyiwa.png" alt="Dr. Victor Odumuyiwa">
+        <div class="team-card__name">Dr. Victor Odumuyiwa</div>
+        <div class="team-card__role">Director, Nithub UNILAG / UniPod Focal Point</div>
+        <p class="team-card__bio">PhD (Lorraine University, France). MIT ETT Fellow. Principal Investigator for the EduAIHub project. The operational lead of the UNILAG AI UniPod and champion of AI education in Nigeria.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-3">
+        <img class="team-card__img" src="../images/adminster/Professor-Yinka-Banjo-e1775342113952.jpg" alt="Prof. Chika Yinka-Banjo">
+        <div class="team-card__name">Prof. Chika Yinka-Banjo</div>
+        <div class="team-card__role">Director, AI UniPod Research</div>
+        <p class="team-card__bio">Professor of Computer Science and AI researcher. Leading the research agenda and academic programs at the AI UniPod, driving innovation in AI education and development.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section--dark">
+  <div class="container text-center">
+    <div class="section-label reveal" style="justify-content:center; margin-bottom:24px;">
+      <div class="section-label__line" style="background:rgba(255,255,255,0.2)"></div>
+      <span class="section-label__text" style="color:rgba(255,255,255,0.4)">Join Us</span>
+      <div class="section-label__line" style="background:rgba(255,255,255,0.2)"></div>
+    </div>
+    <h2 class="t-h2 reveal reveal-delay-1" style="color:white; margin-bottom:32px; max-width:600px; margin-left:auto; margin-right:auto;">
+      Be Part of<br><em class="t-serif-italic text-gold">Africa's AI Story</em>
+    </h2>
+    <p class="t-lead reveal reveal-delay-2" style="color: rgba(255,255,255,0.6); margin-bottom:48px; max-width:480px; margin-left:auto; margin-right:auto;">
+      Apply to our programs, attend our events, or reach out to learn how you can collaborate with the AI UniPod.
+    </p>
+    <div class="flex flex-center gap-4 flex-wrap reveal reveal-delay-3">
+      <a href="programs.html" class="btn btn--gold">View Programs</a>
+      <a href="events.html" class="btn btn--outline-white">Upcoming Events</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div style="margin-bottom: 16px;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto; filter: brightness(0) invert(1);">
+        </div>
+        <div style="font-family: var(--font-ui); font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; margin-bottom: 20px;">AI UniPod Lagos</div>
+        <p>Nigeria's first AI-themed University Innovation Pod. Situated at the University of Lagos, Akoka Campus, Commercial Road, Lagos.</p>
+        
+        <div style="margin-top: 32px;">
+          <h4 style="font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px;">Our Partners</h4>
+          <div class="footer__logos">
+            <img src="images/undp_logo.png" 
+                 alt="UNDP" 
+                 loading="lazy"
+                 style="height: 99px; width: auto;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 loading="lazy"
+                 style="height: 60px; width: auto;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   loading="lazy"
+                   style="height: 65px; width: auto;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 loading="lazy"
+                 style="height: 99px; width: auto; filter: brightness(0) invert(1);">
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="programs.html#ai-solutions">AI Solutions for Africa</a></li>
+          <li><a href="programs.html#bootcamp">AI Innovation Bootcamp</a></li>
+          <li><a href="programs.html#startup">Startup Cohort</a></li>
+          <li><a href="programs.html#ide">Innovation Discovery</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://unilag.edu.ng" target="_blank" rel="noopener">UNILAG</a></li>
+          <li><a href="https://www.undp.org/nigeria" target="_blank" rel="noopener">UNDP Nigeria</a></li>
+          <li><a href="https://www.undp.org/africa/projects/timbuktoo" target="_blank" rel="noopener">Timbuktoo Initiative</a></li>
+          <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 AI UniPod Lagos. A UNILAG × UNDP Timbuktoo Initiative.</p>
+      <div class="footer__socials">
+        <a href="https://x.com/UnilagNigeria" target="_blank" class="footer__social">𝕏</a>
+        <a href="#" class="footer__social">IG</a>
+        <a href="#" class="footer__social">in</a>
+        <a href="https://www.youtube.com/@UNILAGNigeria" target="_blank" class="footer__social">▶</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/mock-data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

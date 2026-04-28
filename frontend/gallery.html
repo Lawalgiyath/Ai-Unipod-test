@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — AI UniPod Lagos | UNILAG × UNDP</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="images/unipods Logo.png">
+  <link rel="apple touch icon" href="images/unipods Logo.png">
+  <meta name="description" content="Photo gallery from the UNILAG AI UniPod — facility, events, programs, and partnerships.">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .gallery-hero { 
+      background: var(--near-black); 
+      padding: 200px 0 100px; 
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 60px 0;
+    }
+    .gallery-filter {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: 1px solid var(--light-gray);
+      border-radius: 40px;
+      cursor: pointer;
+      background: white;
+      color: var(--dark-gray);
+      transition: all 0.2s;
+    }
+    .gallery-filter.active, .gallery-filter:hover {
+      background: var(--undp-blue);
+      border-color: var(--undp-blue);
+      color: white;
+    }
+    .masonry-grid {
+      columns: 3;
+      column-gap: 16px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+    }
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s var(--ease);
+    }
+    .masonry-item:hover img { transform: scale(1.04); }
+    .masonry-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 40px 20px 16px;
+      color: white;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .masonry-item:hover .masonry-caption { opacity: 1; }
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox__img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+    .lightbox__close {
+      position: absolute;
+      top: 24px; right: 32px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background: none; border: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox__close:hover { opacity: 1; }
+    .lightbox__caption {
+      position: absolute;
+      bottom: 24px;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .lightbox__nav {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox__nav:hover { background: rgba(255,255,255,0.2); }
+    .lightbox__prev { left: 24px; }
+    .lightbox__next { right: 24px; }
+    @media (max-width: 768px) { .masonry-grid { columns: 2; } }
+    @media (max-width: 480px) { .masonry-grid { columns: 1; } }
+  </style>
+</head>
+<body>
+
+<div id="loader"><div class="loader__logo">AI <span>UniPod</span> Lagos</div><div class="loader__bar"><div class="loader__progress"></div></div></div>
+<div class="cursor"></div><div class="cursor-ring"></div>
+
+<nav class="nav nav--light" id="mainNav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <!-- Primary Logos (UniPod + UNDP) -->
+        <div class="nav__logo-primary">
+          <!-- UniPod Logo -->
+          <div class="nav__logo-mark" style="background: transparent; width: auto; height: auto; border-radius: 0;">
+            <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto;">
+          </div>
+          
+          <!-- UNDP Logo -->
+          <img src="images/undp_logo.png" 
+               alt="UNDP" 
+               style="height: 100px; width: auto; margin-left: 20px;">
+        </div>
+        
+        <!-- Divider -->
+        <div class="nav__logo-divider"></div>
+        
+        <!-- Secondary Logos (Partners) -->
+        <div class="nav__logo-secondary">
+          <span class="nav__logo-partnership">In Partnership With</span>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 class="nav__logo-university"
+                 style="height: 44px;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   class="nav__logo-university"
+                   style="height: 48px;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 class="nav__logo-university"
+                 style="height: 79px;">
+          </div>
+        </div>
+      </a>
+      <div class="nav__links">
+        <a href="about.html" class="nav__link">About</a>
+        <a href="programs.html" class="nav__link">Programs</a>
+        <a href="news.html" class="nav__link">News</a>
+        <a href="events.html" class="nav__link">Events</a>
+        <a href="gallery.html" class="nav__link active">Gallery</a>
+        <a href="partners.html" class="nav__link">Partners</a>
+      </div>
+      <a href="programs.html#apply" class="nav__cta">Apply Now</a>
+      <div class="nav__hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile">
+  <button class="nav__mobile-close">✕</button>
+  <a href="about.html" class="nav__mobile-link">About</a>
+  <a href="programs.html" class="nav__mobile-link">Programs</a>
+  <a href="news.html" class="nav__mobile-link">News</a>
+  <a href="events.html" class="nav__mobile-link">Events</a>
+  <a href="gallery.html" class="nav__mobile-link">Gallery</a>
+  <a href="partners.html" class="nav__mobile-link">Partners</a>
+</div>
+
+<section class="gallery-hero">
+  <canvas id="iconCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+  <div class="container" style="position: relative; z-index: 2;">
+    <div class="section-label reveal" style="margin-bottom:24px;"><div class="section-label__line" style="background:rgba(255,255,255,0.3)"></div><span class="section-label__text" style="color:rgba(255,255,255,0.5)">Gallery</span></div>
+    <h1 class="t-h1 reveal reveal-delay-1" style="color:white; max-width:700px; margin-bottom:24px;">See the<br><em class="t-serif-italic" style="color:var(--gold-light)">AI UniPod</em></h1>
+    <p class="t-lead reveal reveal-delay-2" style="color:rgba(255,255,255,0.6); max-width:480px;">A visual journey through Nigeria's first AI-themed University Innovation Pod — the facility, the people, and the programs.</p>
+  </div>
+</section>
+
+<div class="container" style="padding-bottom:120px;">
+  <div class="gallery-filters">
+    <button class="gallery-filter active" data-cat="all">All Photos</button>
+    <button class="gallery-filter" data-cat="Facility">Facility</button>
+    <button class="gallery-filter" data-cat="Events">Events</button>
+    <button class="gallery-filter" data-cat="Programs">Programs</button>
+    <button class="gallery-filter" data-cat="People">People</button>
+    <button class="gallery-filter" data-cat="Partnerships">Partnerships</button>
+  </div>
+  <div class="masonry-grid" id="masonryGrid">
+    <div style="padding:80px;text-align:center;color:var(--gray);grid-column:1/-1;">Loading gallery…</div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox__nav lightbox__prev" onclick="navLightbox(-1)">‹</button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  <button class="lightbox__nav lightbox__next" onclick="navLightbox(1)">›</button>
+  <p class="lightbox__caption" id="lightboxCaption"></p>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div style="margin-bottom: 16px;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto; filter: brightness(0) invert(1);">
+        </div>
+        <div style="font-family: var(--font-ui); font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; margin-bottom: 20px;">AI UniPod Lagos</div>
+        <p>Nigeria's first AI-themed University Innovation Pod. Situated at the University of Lagos, Akoka Campus, Commercial Road, Lagos.</p>
+        
+        <div style="margin-top: 32px;">
+          <h4 style="font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px;">Our Partners</h4>
+          <div class="footer__logos">
+            <img src="images/undp_logo.png" 
+                 alt="UNDP" 
+                 loading="lazy"
+                 style="height: 99px; width: auto;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 loading="lazy"
+                 style="height: 60px; width: auto;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   loading="lazy"
+                   style="height: 65px; width: auto;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 loading="lazy"
+                 style="height: 99px; width: auto; filter: brightness(0) invert(1);">
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="programs.html#ai-solutions">AI Solutions for Africa</a></li>
+          <li><a href="programs.html#bootcamp">AI Innovation Bootcamp</a></li>
+          <li><a href="programs.html#startup">Startup Cohort</a></li>
+          <li><a href="programs.html#ide">Innovation Discovery</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://unilag.edu.ng" target="_blank" rel="noopener">UNILAG</a></li>
+          <li><a href="https://www.undp.org/nigeria" target="_blank" rel="noopener">UNDP Nigeria</a></li>
+          <li><a href="https://www.undp.org/africa/projects/timbuktoo" target="_blank" rel="noopener">Timbuktoo Initiative</a></li>
+          <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 AI UniPod Lagos. A UNILAG × UNDP Timbuktoo Initiative.</p>
+      <div class="footer__socials"><a href="#" class="footer__social">𝕏</a><a href="#" class="footer__social">IG</a><a href="#" class="footer__social">in</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/mock-data.js"></script>
+<script src="js/main.js"></script>
+<script>
+// ─── FLOATING INNOVATION ICONS ────────────────────────────────
+(function() {
+  const canvas = document.getElementById('iconCanvas');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  
+  // Innovation icons as SVG paths
+  const icons = [
+    // Light bulb
+    { path: 'M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm2 14h-4v-1h4v1zm0-2h-4v-1h4v1z', size: 24 },
+    // 3D Printer
+    { path: 'M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H6V4h12v16zM8 6h8v2H8zm0 4h8v2H8zm0 4h5v2H8z', size: 24 },
+    // Robot
+    { path: 'M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 7h-2V7c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-8 10H8v-2h2v2zm0-4H8v-2h2v2zm6 4h-2v-2h2v2zm0-4h-2v-2h2v2z', size: 24 },
+    // CPU/Chip
+    { path: 'M9 3v2H7v2H5v2H3v6h2v2h2v2h2v2h6v-2h2v-2h2v-2h2V9h-2V7h-2V5h-2V3H9zm0 4h6v2h2v6h-2v2H9v-2H7V9h2V7z', size: 24 },
+    // Gear/Settings
+    { path: 'M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z', size: 24 },
+    // Brain/AI
+    { path: 'M13 3C9.23 3 6.19 5.95 6 9.66l-1.92.58c-.54.17-.85.76-.68 1.3l1 3c.17.52.69.83 1.21.72l1.9-.37c.5 1.13 1.29 2.1 2.29 2.81v3.3c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-3.3c1-.71 1.79-1.68 2.29-2.81l1.9.37c.52.1 1.04-.2 1.21-.72l1-3c.17-.54-.14-1.13-.68-1.3L18 9.66C17.81 5.95 14.77 3 13 3zm-2 8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z', size: 24 }
+  ];
+  
+  // Create floating icon objects
+  const floatingIcons = [];
+  const iconCount = 15;
+  
+  function resize() {
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+  }
+  
+  function createIcon() {
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+    const scale = 0.8 + Math.random() * 1.2;
+    return {
+      icon: icon,
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: (Math.random() - 0.5) * 1.5,
+      rotation: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.02,
+      scale: scale,
+      opacity: 0.15 + Math.random() * 0.15
+    };
+  }
+  
+  function init() {
+    resize();
+    for (let i = 0; i < iconCount; i++) {
+      floatingIcons.push(createIcon());
+    }
+    animate();
+  }
+  
+  function drawIcon(obj) {
+    ctx.save();
+    ctx.translate(obj.x, obj.y);
+    ctx.rotate(obj.rotation);
+    ctx.scale(obj.scale, obj.scale);
+    
+    // Parse and draw SVG path
+    const path = new Path2D(obj.icon.path);
+    ctx.fillStyle = `rgba(30, 132, 194, ${obj.opacity})`; // UniPods Blue
+    ctx.translate(-obj.icon.size / 2, -obj.icon.size / 2);
+    ctx.fill(path);
+    
+    ctx.restore();
+  }
+  
+  function checkCollision(icon1, icon2) {
+    const dx = icon1.x - icon2.x;
+    const dy = icon1.y - icon2.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const minDist = (icon1.scale + icon2.scale) * 20;
+    
+    if (distance < minDist) {
+      // Calculate collision response
+      const angle = Math.atan2(dy, dx);
+      const targetX = icon1.x + Math.cos(angle) * minDist;
+      const targetY = icon1.y + Math.sin(angle) * minDist;
+      
+      // Bounce
+      const ax = (targetX - icon2.x) * 0.05;
+      const ay = (targetY - icon2.y) * 0.05;
+      
+      icon1.vx -= ax;
+      icon1.vy -= ay;
+      icon2.vx += ax;
+      icon2.vy += ay;
+    }
+  }
+  
+  function update() {
+    floatingIcons.forEach((obj, i) => {
+      // Update position
+      obj.x += obj.vx;
+      obj.y += obj.vy;
+      obj.rotation += obj.rotationSpeed;
+      
+      // Bounce off edges
+      if (obj.x < 0 || obj.x > w) {
+        obj.vx *= -0.8;
+        obj.x = Math.max(0, Math.min(w, obj.x));
+      }
+      if (obj.y < 0 || obj.y > h) {
+        obj.vy *= -0.8;
+        obj.y = Math.max(0, Math.min(h, obj.y));
+      }
+      
+      // Check collisions with other icons
+      for (let j = i + 1; j < floatingIcons.length; j++) {
+        checkCollision(obj, floatingIcons[j]);
+      }
+      
+      // Damping
+      obj.vx *= 0.995;
+      obj.vy *= 0.995;
+    });
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    floatingIcons.forEach(obj => drawIcon(obj));
+  }
+  
+  function animate() {
+    update();
+    draw();
+    requestAnimationFrame(animate);
+  }
+  
+  window.addEventListener('resize', resize);
+  init();
+})();
+</script>
+<script>
+let allImages = [];
+let currentIndex = 0;
+let filteredImages = [];
+
+async function loadGallery() {
+  const grid = document.getElementById('masonryGrid');
+  try {
+    const data = await API.get('gallery', { limit: 100 });
+    allImages = data.data.filter(i => i.published);
+    filteredImages = [...allImages];
+    renderGallery(allImages);
+  } catch(e) {
+    grid.innerHTML = '<p style="padding:80px;text-align:center;color:var(--gray)">Unable to load gallery.</p>';
+  }
+}
+
+function renderGallery(items) {
+  const grid = document.getElementById('masonryGrid');
+  if (!items.length) { grid.innerHTML = '<p style="padding:80px;text-align:center;color:var(--gray)">No photos in this category.</p>'; return; }
+  filteredImages = items;
+  grid.innerHTML = items.map((item, i) => `
+    <div class="masonry-item" onclick="openLightbox(${i})">
+      <img src="${item.image_url}" alt="${item.title}" loading="lazy">
+      <div class="masonry-caption">${item.title}</div>
+    </div>
+  `).join('');
+}
+
+// Filters
+document.querySelector('.gallery-filters').addEventListener('click', e => {
+  const btn = e.target.closest('.gallery-filter');
+  if (!btn) return;
+  document.querySelectorAll('.gallery-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cat = btn.dataset.cat;
+  const filtered = cat === 'all' ? allImages : allImages.filter(i => i.category === cat);
+  renderGallery(filtered);
+});
+
+// Lightbox
+function openLightbox(i) {
+  currentIndex = i;
+  const item = filteredImages[i];
+  document.getElementById('lightboxImg').src = item.image_url;
+  document.getElementById('lightboxCaption').textContent = item.title || '';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navLightbox(dir) {
+  currentIndex = (currentIndex + dir + filteredImages.length) % filteredImages.length;
+  const item = filteredImages[currentIndex];
+  document.getElementById('lightboxImg').src = item.image_url;
+  document.getElementById('lightboxCaption').textContent = item.title || '';
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+  if (e.key === 'ArrowRight') navLightbox(1);
+});
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target.id === 'lightbox') closeLightbox();
+});
+
+document.addEventListener('DOMContentLoaded', loadGallery);
+</script>
+</body>
+</html>

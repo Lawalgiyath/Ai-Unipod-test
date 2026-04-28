@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News — AI UniPod Lagos | UNILAG × UNDP</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="images/unipods Logo.png">
+  <link rel="apple touch icon" href="images/unipods Logo.png">
+  <meta name="description" content="Latest news and announcements from the UNILAG AI UniPod — Nigeria's first AI-themed University Innovation Pod.">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .news-hero { 
+      background: var(--near-black); 
+      padding: 200px 0 100px; 
+      position: relative;
+      overflow: hidden;
+    }
+    .news-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 80px;
+      align-items: start;
+      padding-top: 80px;
+      padding-bottom: 120px;
+    }
+    .news-article {
+      border-bottom: 1px solid var(--light-gray);
+      padding-bottom: 60px;
+      margin-bottom: 60px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .news-article:hover { opacity: 0.85; }
+    .news-article:last-child { border-bottom: none; }
+    .news-article__img {
+      width: 100%;
+      aspect-ratio: 16/8;
+      object-fit: cover;
+      margin-bottom: 32px;
+      border-radius: 2px;
+      transition: transform 0.4s;
+    }
+    .news-article:hover .news-article__img { transform: scale(1.02); }
+    .news-article__img-wrap { overflow: hidden; border-radius: 2px; }
+    .news-article__meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .news-article__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--near-black);
+    }
+    .news-article__excerpt {
+      font-size: 1rem;
+      color: var(--dark-gray);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      max-width: 600px;
+    }
+
+    /* Sidebar */
+    .news-sidebar { position: sticky; top: 100px; }
+    .sidebar-widget {
+      background: var(--off-white);
+      padding: 36px;
+      margin-bottom: 24px;
+    }
+    .sidebar-widget h4 {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--undp-blue);
+      margin-bottom: 20px;
+    }
+    .sidebar-cat {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sidebar-cat button {
+      text-align: left;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: var(--dark-gray);
+      transition: color 0.2s;
+      padding: 0;
+      cursor: pointer;
+      background: none; border: none;
+    }
+    .sidebar-cat button:hover, .sidebar-cat button.active { color: var(--undp-blue); font-weight: 600; }
+    .sidebar-recent { display: flex; flex-direction: column; gap: 20px; }
+    .sidebar-recent-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+    .sidebar-recent-item:hover { opacity: 0.7; }
+    .sidebar-recent-item img {
+      width: 64px; height: 48px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+    .sidebar-recent-item p {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--near-black);
+    }
+    @media (max-width: 900px) {
+      .news-layout { grid-template-columns: 1fr; }
+      .news-sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader"><div class="loader__logo">AI <span>UniPod</span> Lagos</div><div class="loader__bar"><div class="loader__progress"></div></div></div>
+<div class="cursor"></div><div class="cursor-ring"></div>
+
+<nav class="nav nav--light" id="mainNav">
+  <div class="container"><div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <div class="nav__logo-primary">
+        <div class="nav__logo-mark" style="background: transparent; width: auto; height: auto; border-radius: 0;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto;">
+        </div>
+        <img src="images/undp_logo.png" alt="UNDP" style="height: 100px; width: auto; margin-left: 20px;">
+      </div>
+      <div class="nav__logo-divider"></div>
+      <div class="nav__logo-secondary">
+        <span class="nav__logo-partnership">In Partnership With</span>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <img src="images/UNILAG LOGO.png" alt="University of Lagos" style="height: 44px;">
+          <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+            <img src="images/Nigerias_Coat_of_arms.png" alt="Federal Government of Nigeria" style="height: 48px;">
+          </a>
+          <img src="images/tetfund_logo.png" alt="TETFund" style="height: 79px;">
+        </div>
+      </div>
+    </a>
+    <div class="nav__links">
+      <a href="about.html" class="nav__link">About</a>
+      <a href="programs.html" class="nav__link">Programs</a>
+      <a href="news.html" class="nav__link active">News</a>
+      <a href="events.html" class="nav__link">Events</a>
+      <a href="gallery.html" class="nav__link">Gallery</a>
+      <a href="partners.html" class="nav__link">Partners</a>
+    </div>
+    <a href="programs.html#apply" class="nav__cta">Apply Now</a>
+    <div class="nav__hamburger"><span></span><span></span><span></span></div>
+  </div></div>
+</nav>
+<div class="nav__mobile">
+  <button class="nav__mobile-close">✕</button>
+  <a href="about.html" class="nav__mobile-link">About</a>
+  <a href="programs.html" class="nav__mobile-link">Programs</a>
+  <a href="news.html" class="nav__mobile-link">News</a>
+  <a href="events.html" class="nav__mobile-link">Events</a>
+  <a href="gallery.html" class="nav__mobile-link">Gallery</a>
+  <a href="partners.html" class="nav__mobile-link">Partners</a>
+</div>
+
+<!-- HERO -->
+<section class="news-hero">
+  <canvas id="newsIconCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+  <div class="container" style="position: relative; z-index: 2;">
+    <div class="section-label reveal" style="margin-bottom:24px;"><div class="section-label__line" style="background:rgba(255,255,255,0.3)"></div><span class="section-label__text" style="color:rgba(255,255,255,0.5)">Latest News</span></div>
+    <h1 class="t-h1 reveal reveal-delay-1" style="color:white; max-width:700px; margin-bottom:24px;">What's Happening<br><em class="t-serif-italic" style="color:var(--gold-light)">at the Pod</em></h1>
+    <p class="t-lead reveal reveal-delay-2" style="color:rgba(255,255,255,0.6); max-width:520px;">Updates, milestones, partnerships, and stories from Nigeria's first AI-themed University Innovation Pod.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="news-layout">
+    <div id="newsArticles">
+      <div style="padding: 80px 0; text-align: center; color: var(--gray);">Loading news…</div>
+    </div>
+    <aside class="news-sidebar">
+      <div class="sidebar-widget">
+        <h4>Categories</h4>
+        <div class="sidebar-cat" id="catFilters">
+          <button class="active" data-cat="all">All</button>
+          <button data-cat="Milestone">Milestones</button>
+          <button data-cat="Partnership">Partnerships</button>
+          <button data-cat="Announcement">Announcements</button>
+          <button data-cat="Research">Research</button>
+          <button data-cat="Media Coverage">Media Coverage</button>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h4>Recent Articles</h4>
+        <div class="sidebar-recent" id="sidebarRecent"></div>
+      </div>
+      <div class="sidebar-widget" style="background: var(--undp-blue); color: white;">
+        <h4 style="color: rgba(255,255,255,0.5)">Stay Updated</h4>
+        <p style="font-size:0.875rem; color:rgba(255,255,255,0.75); margin-bottom: 20px; line-height:1.6">Get news from the AI UniPod delivered to you.</p>
+        <a href="https://undp.org/nigeria" target="_blank" class="btn btn--outline-white" style="width:100%; justify-content:center; font-size:0.78rem;">Follow UNDP Nigeria</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div style="margin-bottom: 16px;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto; filter: brightness(0) invert(1);">
+        </div>
+        <div style="font-family: var(--font-ui); font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; margin-bottom: 20px;">AI UniPod Lagos</div>
+        <p>Nigeria's first AI-themed University Innovation Pod. Situated at the University of Lagos, Akoka Campus, Commercial Road, Lagos.</p>
+        
+        <div style="margin-top: 32px;">
+          <h4 style="font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px;">Our Partners</h4>
+          <div class="footer__logos">
+            <img src="images/undp_logo.png" 
+                 alt="UNDP" 
+                 loading="lazy"
+                 style="height: 99px; width: auto;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 loading="lazy"
+                 style="height: 60px; width: auto;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   loading="lazy"
+                   style="height: 65px; width: auto;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 loading="lazy"
+                 style="height: 99px; width: auto; filter: brightness(0) invert(1);">
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="programs.html#ai-solutions">AI Solutions for Africa</a></li>
+          <li><a href="programs.html#bootcamp">AI Innovation Bootcamp</a></li>
+          <li><a href="programs.html#startup">Startup Cohort</a></li>
+          <li><a href="programs.html#ide">Innovation Discovery</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://unilag.edu.ng" target="_blank" rel="noopener">UNILAG</a></li>
+          <li><a href="https://www.undp.org/nigeria" target="_blank" rel="noopener">UNDP Nigeria</a></li>
+          <li><a href="https://www.undp.org/africa/projects/timbuktoo" target="_blank" rel="noopener">Timbuktoo Initiative</a></li>
+          <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 AI UniPod Lagos. A UNILAG × UNDP Timbuktoo Initiative.</p>
+      <div class="footer__socials">
+        <a href="https://x.com/UnilagNigeria" target="_blank" class="footer__social">𝕏</a>
+        <a href="#" class="footer__social">IG</a>
+        <a href="#" class="footer__social">in</a>
+        <a href="https://www.youtube.com/@UNILAGNigeria" target="_blank" class="footer__social">▶</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/mock-data.js"></script>
+<script src="js/main.js"></script>
+<script>
+// ─── FLOATING NEWS ICONS ────────────────────────────────
+(function() {
+  const canvas = document.getElementById('newsIconCanvas');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  let mouse = { x: null, y: null, radius: 100 };
+  
+  // News-related icons as SVG paths
+  const icons = [
+    // Newspaper
+    { path: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h6v3h-6zm0 4h6v3h-6z', size: 24 },
+    // Article/Document
+    { path: 'M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15h8v2H8zm0-4h8v2H8zm0-4h5v2H8z', size: 24 },
+    // Megaphone/Announcement
+    { path: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5h3V8h4v4h3l-5 5z', size: 24 },
+    // RSS Feed
+    { path: 'M6.18 15.64c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z', size: 24 },
+    // Notification Bell
+    { path: 'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z', size: 24 },
+    // Bookmark
+    { path: 'M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z', size: 24 },
+    // Share
+    { path: 'M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z', size: 24 },
+    // Email/Newsletter
+    { path: 'M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z', size: 24 },
+    // Calendar/Date
+    { path: 'M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z', size: 24 },
+    // Trending Up
+    { path: 'M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z', size: 24 },
+    // Star (Featured)
+    { path: 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z', size: 24 },
+    // Chat/Comment
+    { path: 'M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z', size: 24 },
+    // Link
+    { path: 'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z', size: 24 },
+    // Visibility/Views
+    { path: 'M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z', size: 24 }
+  ];
+  
+  // Create denser floating icon objects (30 icons)
+  const floatingIcons = [];
+  const iconCount = 30;
+  
+  function resize() {
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+  }
+  
+  function createIcon() {
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+    const scale = 0.6 + Math.random() * 1.0;
+    return {
+      icon: icon,
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 1.0,
+      vy: (Math.random() - 0.5) * 1.0,
+      rotation: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.01,
+      scale: scale,
+      opacity: 0.1 + Math.random() * 0.12
+    };
+  }
+  
+  function init() {
+    resize();
+    for (let i = 0; i < iconCount; i++) {
+      floatingIcons.push(createIcon());
+    }
+    animate();
+  }
+  
+  function drawIcon(obj) {
+    ctx.save();
+    ctx.translate(obj.x, obj.y);
+    ctx.rotate(obj.rotation);
+    ctx.scale(obj.scale, obj.scale);
+    
+    const path = new Path2D(obj.icon.path);
+    ctx.fillStyle = `rgba(30, 132, 194, ${obj.opacity})`; // UniPods Blue
+    ctx.translate(-obj.icon.size / 2, -obj.icon.size / 2);
+    ctx.fill(path);
+    
+    ctx.restore();
+  }
+  
+  function checkCollision(icon1, icon2) {
+    const dx = icon1.x - icon2.x;
+    const dy = icon1.y - icon2.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const minDist = (icon1.scale + icon2.scale) * 16;
+    
+    if (distance < minDist && distance > 0.1) {
+      const angle = Math.atan2(dy, dx);
+      const targetX = icon1.x + Math.cos(angle) * minDist;
+      const targetY = icon1.y + Math.sin(angle) * minDist;
+      
+      const ax = (targetX - icon2.x) * 0.02;
+      const ay = (targetY - icon2.y) * 0.02;
+      
+      icon1.vx = Math.max(-1.5, Math.min(1.5, icon1.vx - ax));
+      icon1.vy = Math.max(-1.5, Math.min(1.5, icon1.vy - ay));
+      icon2.vx = Math.max(-1.5, Math.min(1.5, icon2.vx + ax));
+      icon2.vy = Math.max(-1.5, Math.min(1.5, icon2.vy + ay));
+      
+      const overlap = minDist - distance;
+      const separateX = (dx / distance) * overlap * 0.5;
+      const separateY = (dy / distance) * overlap * 0.5;
+      icon1.x += separateX;
+      icon1.y += separateY;
+      icon2.x -= separateX;
+      icon2.y -= separateY;
+    }
+  }
+  
+  function update() {
+    floatingIcons.forEach((obj, i) => {
+      // Mouse interaction
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = obj.x - mouse.x;
+        const dy = obj.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < mouse.radius) {
+          const force = (mouse.radius - distance) / mouse.radius;
+          const angle = Math.atan2(dy, dx);
+          obj.vx += Math.cos(angle) * force * 0.6;
+          obj.vy += Math.sin(angle) * force * 0.6;
+        }
+      }
+      
+      obj.x += obj.vx;
+      obj.y += obj.vy;
+      obj.rotation += obj.rotationSpeed;
+      
+      // Bounce off edges
+      if (obj.x < 0 || obj.x > w) {
+        obj.vx *= -0.7;
+        obj.x = Math.max(0, Math.min(w, obj.x));
+      }
+      if (obj.y < 0 || obj.y > h) {
+        obj.vy *= -0.7;
+        obj.y = Math.max(0, Math.min(h, obj.y));
+      }
+      
+      // Check collisions
+      for (let j = i + 1; j < floatingIcons.length; j++) {
+        checkCollision(obj, floatingIcons[j]);
+      }
+      
+      obj.vx *= 0.995;
+      obj.vy *= 0.995;
+    });
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    floatingIcons.forEach(obj => drawIcon(obj));
+  }
+  
+  function animate() {
+    update();
+    draw();
+    requestAnimationFrame(animate);
+  }
+  
+  // Mouse tracking
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  
+  canvas.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+  
+  window.addEventListener('resize', resize);
+  init();
+})();
+</script>
+<script>
+let allArticles = [];
+let activeCategory = 'all';
+
+async function loadNews() {
+  const container = document.getElementById('newsArticles');
+  const sidebarRecent = document.getElementById('sidebarRecent');
+  try {
+    const data = await API.get('news', { limit: 50, sort: '-published_date' });
+    allArticles = data.data.filter(a => a.published);
+    
+    // Sort by date (newest first)
+    allArticles.sort((a, b) => {
+      const dateA = new Date(a.published_date);
+      const dateB = new Date(b.published_date);
+      return dateB - dateA; // Descending order (newest first)
+    });
+    
+    renderArticles(allArticles);
+
+    // Sidebar recent
+    sidebarRecent.innerHTML = allArticles.slice(0, 4).map(a => `
+      <a href="${a.source_url || '#'}" target="_blank" rel="noopener noreferrer" class="sidebar-recent-item">
+        ${a.cover_image ? `<img src="${a.cover_image}" alt="${a.title}">` : `<div style="width:64px;height:48px;background:var(--light-gray)"></div>`}
+        <p>${a.title}</p>
+      </a>
+    `).join('');
+  } catch(e) {
+    container.innerHTML = '<p style="padding:80px; text-align:center; color:var(--gray)">Unable to load news.</p>';
+  }
+}
+
+function openArticle(url) {
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}
+
+function renderArticles(items) {
+  const container = document.getElementById('newsArticles');
+  if (!items.length) {
+    container.innerHTML = '<p style="padding:60px 0; color:var(--gray)">No articles in this category yet.</p>';
+    return;
+  }
+  container.innerHTML = items.map(a => `
+    <article class="news-article reveal" id="article-${a.id}" onclick="openArticle('${a.source_url || '#'}')" style="cursor: pointer;">
+      ${a.cover_image ? `<div class="news-article__img-wrap"><img class="news-article__img" src="${a.cover_image}" alt="${a.title}" loading="lazy"></div>` : ''}
+      <div class="news-article__meta">
+        <span class="tag tag--blue">${a.category || 'News'}</span>
+        <span class="t-label text-gray">${formatDate(a.published_date)}</span>
+      </div>
+      <h2 class="news-article__title">${a.title}</h2>
+      <p class="news-article__excerpt">${a.excerpt || ''}</p>
+      <span class="btn--ghost read-toggle">Read full article →</span>
+    </article>
+  `).join('');
+
+  // Re-init reveal
+  setTimeout(() => {
+    document.querySelectorAll('.news-article.reveal').forEach(el => {
+      new IntersectionObserver(e => { if(e[0].isIntersecting) { el.classList.add('visible'); } }, { threshold: 0.1 }).observe(el);
+    });
+  }, 100);
+}
+
+// Category filter
+document.getElementById('catFilters').addEventListener('click', e => {
+  if (!e.target.dataset.cat) return;
+  activeCategory = e.target.dataset.cat;
+  document.querySelectorAll('.sidebar-cat button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  const filtered = activeCategory === 'all' ? allArticles : allArticles.filter(a => a.category === activeCategory);
+  renderArticles(filtered);
+});
+
+document.addEventListener('DOMContentLoaded', loadNews);
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# AI UniPod Lagos - Robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /tables/
+Disallow: /.git/
+Disallow: /.vscode/
+
+# Sitemap
+Sitemap: https://unipodlagos.ng/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

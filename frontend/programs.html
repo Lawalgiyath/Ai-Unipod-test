@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programs — AI UniPod Lagos | UNILAG × UNDP</title>
+  <meta name="description" content="Apply to AI UniPod programs — AI Solutions for Africa, Innovation Bootcamp, Startup Cohort, and the Innovation Discovery Exercise.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="images/unipods Logo.png">
+  <link rel="apple touch icon" href="images/unipods Logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .programs-hero { background: var(--near-black); padding: 200px 0 120px; position: relative; overflow: hidden; }
+    .programs-hero__grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(4,104,177,0.08) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(4,104,177,0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .program-detail {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .program-detail:last-child { border-bottom: none; }
+    .program-detail__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .program-detail__inner.reverse { direction: rtl; }
+    .program-detail__inner.reverse > * { direction: ltr; }
+    .program-detail__img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+    .program-detail__number {
+      font-family: var(--font-heading);
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--light-gray);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .program-detail__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .program-detail__subtitle {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--undp-blue);
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+    .program-detail__desc {
+      font-size: 1rem;
+      color: var(--dark-gray);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .program-detail__desc p { margin-bottom: 16px; }
+    .program-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .program-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+    }
+    .program-feature::before {
+      content: '→';
+      color: var(--undp-blue);
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+    .apply-section {
+      background: var(--undp-blue);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .apply-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .eligibility-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--light-gray);
+      margin: 60px 0 0;
+    }
+    .eligibility-item {
+      background: var(--off-white);
+      padding: 40px;
+    }
+    .eligibility-item h4 {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--undp-blue);
+      margin-bottom: 12px;
+    }
+    .eligibility-item p {
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+      line-height: 1.65;
+    }
+    @media (max-width: 900px) {
+      .program-detail__inner, .program-detail__inner.reverse { grid-template-columns: 1fr; direction: ltr; }
+      .eligibility-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader"><div class="loader__logo">AI <span>UniPod</span> Lagos</div><div class="loader__bar"><div class="loader__progress"></div></div></div>
+<div class="cursor"></div><div class="cursor-ring"></div>
+
+<nav class="nav nav--light" id="mainNav">
+  <div class="container"><div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <!-- Primary Logos (UniPod + UNDP) -->
+      <div class="nav__logo-primary">
+        <div class="nav__logo-mark" style="background: transparent; width: auto; height: auto; border-radius: 0;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto;">
+        </div>
+        <img src="images/undp_logo.png" alt="UNDP" style="height: 100px; width: auto; margin-left: 20px;">
+      </div>
+      <div class="nav__logo-divider"></div>
+      <div class="nav__logo-secondary">
+        <span class="nav__logo-partnership">In Partnership With</span>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+            <img src="images/UNILAG LOGO.png" alt="University of Lagos" class="nav__logo-university" style="height: 44px;">
+          </a>
+          <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+            <img src="images/Nigerias_Coat_of_arms.png" alt="Federal Government of Nigeria" class="nav__logo-university" style="height: 48px;">
+          </a>
+          <img src="images/tetfund_logo.png" alt="TETFund" class="nav__logo-university" style="height: 79px;">
+        </div>
+      </div>
+    </a>
+    <div class="nav__links">
+      <a href="about.html" class="nav__link">About</a>
+      <a href="programs.html" class="nav__link active">Programs</a>
+      <a href="news.html" class="nav__link">News</a>
+      <a href="events.html" class="nav__link">Events</a>
+      <a href="gallery.html" class="nav__link">Gallery</a>
+      <a href="partners.html" class="nav__link">Partners</a>
+    </div>
+    <a href="#apply" class="nav__cta">Apply Now</a>
+    <div class="nav__hamburger"><span></span><span></span><span></span></div>
+  </div></div>
+</nav>
+<div class="nav__mobile">
+  <button class="nav__mobile-close">✕</button>
+  <a href="about.html" class="nav__mobile-link">About</a>
+  <a href="programs.html" class="nav__mobile-link">Programs</a>
+  <a href="news.html" class="nav__mobile-link">News</a>
+  <a href="events.html" class="nav__mobile-link">Events</a>
+  <a href="gallery.html" class="nav__mobile-link">Gallery</a>
+  <a href="partners.html" class="nav__mobile-link">Partners</a>
+</div>
+
+<section class="programs-hero">
+  <canvas id="heroParticles" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+  <div class="programs-hero__grid" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="section-label reveal" style="margin-bottom:24px;"><div class="section-label__line" style="background:rgba(255,255,255,0.3)"></div><span class="section-label__text" style="color:rgba(255,255,255,0.5)">Programs</span></div>
+    <h1 class="t-h1 reveal reveal-delay-1" style="color:white; max-width:800px; margin-bottom:32px;">Learn. Build.<br><em class="t-serif-italic" style="color:var(--gold-light)">Scale Africa.</em></h1>
+    <p class="t-lead reveal reveal-delay-2" style="color:rgba(255,255,255,0.65); max-width:580px; margin-bottom: 48px;">From foundational AI training to startup acceleration, our programs take you from idea to impact — rooted in Africa's challenges, connected to the world's opportunities.</p>
+    <div class="flex gap-4 flex-wrap reveal reveal-delay-3">
+      <a href="#ai-solutions" class="btn btn--outline-white">AI Solutions for Africa</a>
+      <a href="#bootcamp" class="btn btn--outline-white">Innovation Bootcamp</a>
+      <a href="#startup" class="btn btn--outline-white">Startup Cohort</a>
+      <a href="#ide" class="btn btn--outline-white">Innovation Discovery</a>
+    </div>
+  </div>
+</section>
+
+<!-- Dynamic programs loaded here -->
+<div id="programsDetail"></div>
+
+<!-- TIMBUKTOO CALLOUT -->
+<section class="section section--off-white">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+      <div>
+        <div class="section-label reveal"><div class="section-label__line"></div><span class="section-label__text">Pan-African Network</span></div>
+        <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom:24px;">Connected to Africa's Largest Innovation Ecosystem</h2>
+        <p class="t-body reveal reveal-delay-2" style="margin-bottom:32px;">The UNILAG AI UniPod is part of UNDP's Timbuktoo Initiative — connecting you to a network of thematic hubs, investors, mentors, and innovators across 13 African countries.</p>
+        <a href="https://www.undp.org/africa/projects/timbuktoo" target="_blank" class="btn btn--primary reveal reveal-delay-3">Explore Timbuktoo</a>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <img src="https://unilag.edu.ng/wp-content/uploads/2026/03/photo_15_2026-03-11_09-17-05-1024x849.jpg" alt="Innovation bootcamp" style="width:100%;border-radius:2px;aspect-ratio:4/3;object-fit:cover;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELIGIBILITY -->
+<section class="section">
+  <div class="container">
+    <div class="section-label reveal"><div class="section-label__line"></div><span class="section-label__text">Eligibility</span></div>
+    <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom:16px;">Who Can Apply?</h2>
+    <p class="t-lead reveal reveal-delay-2" style="max-width:560px; margin-bottom:0;">Open to all — disabled, students, researchers, innovators, and entrepreneurs ready to tackle Africa's challenges with technology.</p>
+    <div class="eligibility-grid reveal reveal-delay-3">
+      <div class="eligibility-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--unipods-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+        </svg>
+        <h4>Students</h4>
+        <p>Undergraduate and postgraduate students at UNILAG and partner universities. No prior AI experience required — just curiosity and drive.</p>
+      </div>
+      <div class="eligibility-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--unipods-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;">
+          <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+          <path d="M12.5 16c3.5 0 6.5 1 6.5 4v1H5v-1c0-3 3-4 6.5-4z"></path>
+          <path d="M3 5h2M3 9h2M3 13h2M19 5h2M19 9h2M19 13h2"></path>
+        </svg>
+        <h4>Researchers</h4>
+        <p>Faculty and independent researchers with applied research or early-stage innovations that can be developed into scalable solutions.</p>
+      </div>
+      <div class="eligibility-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--unipods-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
+        </svg>
+        <h4>Innovators & Entrepreneurs</h4>
+        <p>Early-stage founders and creators within the UNILAG ecosystem looking to prototype, validate, and launch technology-driven ventures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY CTA -->
+<section class="apply-section" id="apply">
+  <div class="container" style="position:relative;z-index:2;">
+    <div style="max-width:600px;">
+      <div class="section-label reveal" style="margin-bottom:24px;"><div class="section-label__line" style="background:rgba(255,255,255,0.3)"></div><span class="section-label__text" style="color:rgba(255,255,255,0.5)">Apply Now</span></div>
+      <h2 class="t-h2 reveal reveal-delay-1" style="color:white;margin-bottom:24px;">Ready to Build Africa's AI Future?</h2>
+      <p class="t-lead reveal reveal-delay-2" style="color:rgba(255,255,255,0.65);margin-bottom:48px;">Submit your application or innovation for the UniPod startup cohort. Submissions are rolling — don't wait.</p>
+      <div class="flex gap-4 flex-wrap reveal reveal-delay-3">
+        <button id="yesBtn" class="btn btn--gold">Yes!</button>
+      </div>
+      <div id="applicationBtnContainer" style="display:none; margin-top: 24px; opacity: 0;">
+        <a href="https://forms.gle/KdXBjLBUdJ2GD7MD7" target="_blank" class="btn btn--gold" style="margin-right:16px;">Submit Application</a>
+        <a href="events.html" class="btn btn--outline-white">Attend an Info Session</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div style="margin-bottom: 16px;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto; filter: brightness(0) invert(1);">
+        </div>
+        <div style="font-family: var(--font-ui); font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; margin-bottom: 20px;">AI UniPod Lagos</div>
+        <p>Nigeria's first AI-themed University Innovation Pod. Situated at the University of Lagos, Akoka Campus, Commercial Road, Lagos.</p>
+        
+        <div style="margin-top: 32px;">
+          <h4 style="font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px;">Our Partners</h4>
+          <div class="footer__logos">
+            <img src="images/undp_logo.png" 
+                 alt="UNDP" 
+                 loading="lazy"
+                 style="height: 99px; width: auto;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 loading="lazy"
+                 style="height: 60px; width: auto;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   loading="lazy"
+                   style="height: 65px; width: auto;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 loading="lazy"
+                 style="height: 99px; width: auto; filter: brightness(0) invert(1);">
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="programs.html#ai-solutions">AI Solutions for Africa</a></li>
+          <li><a href="programs.html#bootcamp">AI Innovation Bootcamp</a></li>
+          <li><a href="programs.html#startup">Startup Cohort</a></li>
+          <li><a href="programs.html#ide">Innovation Discovery</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://unilag.edu.ng" target="_blank" rel="noopener">UNILAG</a></li>
+          <li><a href="https://www.undp.org/nigeria" target="_blank" rel="noopener">UNDP Nigeria</a></li>
+          <li><a href="https://www.undp.org/africa/projects/timbuktoo" target="_blank" rel="noopener">Timbuktoo Initiative</a></li>
+          <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 AI UniPod Lagos. A UNILAG × UNDP Timbuktoo Initiative.</p>
+      <div class="footer__socials"><a href="#" class="footer__social">𝕏</a><a href="#" class="footer__social">IG</a><a href="#" class="footer__social">in</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/mock-data.js"></script>
+<script src="js/main.js"></script>
+<script src="js/particles.js"></script>
+<script>
+const PROGRAM_IMGS = [
+  'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg',
+  'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_6_2026-03-11_09-17-05-1024x742.jpg',
+  'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_8_2026-03-11_09-17-05-1024x770.jpg',
+  'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_20_2026-03-11_09-17-05-1024x756.jpg'
+];
+
+async function loadPrograms() {
+  const container = document.getElementById('programsDetail');
+  try {
+    const data = await API.get('programs', { limit: 20 });
+    // Filter out fake/test programs and only show published real programs
+    const items = data.data.filter(p => p.published && !p.title.toLowerCase().includes('test') && !p.title.toLowerCase().includes('sample'));
+    if (!items.length) { container.innerHTML = '<p style="padding:80px;text-align:center;color:var(--gray)">No programs found.</p>'; return; }
+
+    const anchors = { 'AI Solutions for Africa Program': 'ai-solutions', 'AI Innovation Bootcamp': 'bootcamp', 'UniPod Startup Cohort': 'startup', 'Innovation Discovery Exercise': 'ide' };
+
+    container.innerHTML = `<div class="container">` + items.map((p, i) => {
+      const isEven = i % 2 === 0;
+      const anchor = anchors[p.title] || `program-${i}`;
+      return `
+        <div class="program-detail reveal" id="${anchor}">
+          <div class="program-detail__inner ${isEven ? '' : 'reverse'}">
+            <div>
+              <div class="program-detail__number">0${i+1}</div>
+              <span class="program-card__status program-card__status--${(p.status||'active').toLowerCase()}" style="display:inline-block;margin-bottom:16px;">${p.status||'Active'}</span>
+              <h2 class="program-detail__title">${p.title}</h2>
+              <p class="program-detail__subtitle">${p.subtitle||''}</p>
+              <div class="program-detail__desc">${p.description||''}</div>
+              ${p.application_link ? `<a href="${p.application_link}" class="btn btn--primary" style="margin-right:16px;">Apply Now →</a>` : ''}
+              <a href="events.html" class="btn btn--outline" style="margin-top:8px;">See Related Events</a>
+            </div>
+            <div>
+              <img class="program-detail__img" src="${p.cover_image || PROGRAM_IMGS[i % PROGRAM_IMGS.length]}" alt="${p.title}" loading="lazy">
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('') + `</div>`;
+
+    setTimeout(() => {
+      document.querySelectorAll('.program-detail.reveal').forEach(el => {
+        new IntersectionObserver(e => { if(e[0].isIntersecting) el.classList.add('visible'); }, {threshold:0.08}).observe(el);
+      });
+    }, 100);
+
+    // Handle anchor scroll
+    const hash = window.location.hash.replace('#','');
+    if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior:'smooth', block:'start' }), 400);
+
+  } catch(e) {
+    container.innerHTML = '<p style="padding:80px;text-align:center;color:var(--gray)">Unable to load programs.</p>';
+  }
+}
+
+// Yes button animation and interaction
+document.addEventListener('DOMContentLoaded', () => {
+  loadPrograms();
+  
+  const yesBtn = document.getElementById('yesBtn');
+  const appContainer = document.getElementById('applicationBtnContainer');
+  
+  if (yesBtn && appContainer) {
+    yesBtn.addEventListener('click', function() {
+      // Fade out and scale down the yes button
+      yesBtn.style.transition = 'all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
+      yesBtn.style.transform = 'scale(0.8)';
+      yesBtn.style.opacity = '0';
+      
+      setTimeout(() => {
+        yesBtn.style.display = 'none';
+        appContainer.style.display = 'flex';
+        appContainer.style.gap = '16px';
+        appContainer.style.flexWrap = 'wrap';
+        
+        // Fade in and slide up the application buttons
+        setTimeout(() => {
+          appContainer.style.transition = 'all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+          appContainer.style.opacity = '1';
+          appContainer.style.transform = 'translateY(0)';
+        }, 50);
+      }, 500);
+      
+      // Initial state for slide up animation
+      appContainer.style.transform = 'translateY(20px)';
+    });
+  }
+});
+</script>
+</body>
+</html>

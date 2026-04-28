@@ -1,0 +1,47 @@
+{
+  "name": "ai-unipod-lagos",
+  "version": "1.0.0",
+  "description": "Official website for AI UniPod Lagos - Nigeria's first AI-themed University Innovation Pod",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod",
+    "lighthouse": "lhci autorun --collect.url=http://localhost:8000",
+    "validate": "html-validate *.html",
+    "scrape:news": "node scripts/scrape-unipod-only.js",
+    "scrape:test": "node scripts/test-scraper.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/unipod-lagos.git"
+  },
+  "keywords": [
+    "AI",
+    "UniPod",
+    "Lagos",
+    "UNILAG",
+    "UNDP",
+    "Timbuktoo",
+    "Innovation",
+    "Africa",
+    "Nigeria",
+    "Education",
+    "Technology"
+  ],
+  "author": "AI UniPod Lagos",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@lhci/cli": "^0.12.0",
+    "html-validate": "^8.0.0",
+    "serve": "^14.2.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

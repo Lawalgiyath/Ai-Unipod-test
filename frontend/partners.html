@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partners — AI UniPod Lagos | UNILAG × UNDP</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="images/unipods Logo.png">
+  <link rel="apple touch icon" href="images/unipods Logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .partners-hero { background: var(--near-black); padding: 200px 0 100px; }
+    @media (max-width: 900px) {
+      .partners-hero > .container > div { grid-template-columns: 1fr !important; }
+      .partners-hero svg { width: 120px; height: 120px; margin: 0 auto; }
+    }
+    .partner-full-card {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      padding: 60px 0;
+      border-bottom: 1px solid var(--light-gray);
+      align-items: center;
+    }
+    .partner-full-card:last-child { border-bottom: none; }
+    .partner-full-card__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: var(--off-white);
+      min-height: 120px;
+    }
+    .partner-full-card__logo img {
+      max-height: 80px;
+      max-width: 160px;
+      object-fit: contain;
+    }
+    .partner-full-card__name {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .partner-full-card__cat {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--undp-blue);
+      margin-bottom: 16px;
+    }
+    .partner-full-card__desc {
+      font-size: 0.95rem;
+      color: var(--dark-gray);
+      line-height: 1.7;
+      max-width: 500px;
+    }
+    @media (max-width: 768px) {
+      .partner-full-card { grid-template-columns: 1fr; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader"><div class="loader__logo">AI <span>UniPod</span> Lagos</div><div class="loader__bar"><div class="loader__progress"></div></div></div>
+<div class="cursor"></div><div class="cursor-ring"></div>
+
+<nav class="nav nav--light" id="mainNav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <!-- Primary Logos (UniPod + UNDP) -->
+        <div class="nav__logo-primary">
+          <!-- UniPod Logo -->
+          <div class="nav__logo-mark" style="background: transparent; width: auto; height: auto; border-radius: 0;">
+            <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto;">
+          </div>
+          
+          <!-- UNDP Logo -->
+          <img src="images/undp_logo.png" 
+               alt="UNDP" 
+               style="height: 100px; width: auto; margin-left: 20px;">
+        </div>
+        
+        <!-- Divider -->
+        <div class="nav__logo-divider"></div>
+        
+        <!-- Secondary Logos (Partners) -->
+        <div class="nav__logo-secondary">
+          <span class="nav__logo-partnership">In Partnership With</span>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 class="nav__logo-university"
+                 style="height: 44px;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   class="nav__logo-university"
+                   style="height: 48px;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 class="nav__logo-university"
+                 style="height: 79px;">
+          </div>
+        </div>
+      </a>
+      <div class="nav__links">
+        <a href="about.html" class="nav__link">About</a>
+        <a href="programs.html" class="nav__link">Programs</a>
+        <a href="news.html" class="nav__link">News</a>
+        <a href="events.html" class="nav__link">Events</a>
+        <a href="gallery.html" class="nav__link">Gallery</a>
+        <a href="partners.html" class="nav__link active">Partners</a>
+      </div>
+      <a href="programs.html#apply" class="nav__cta">Apply Now</a>
+      <div class="nav__hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile">
+  <button class="nav__mobile-close">✕</button>
+  <a href="about.html" class="nav__mobile-link">About</a>
+  <a href="programs.html" class="nav__mobile-link">Programs</a>
+  <a href="news.html" class="nav__mobile-link">News</a>
+  <a href="events.html" class="nav__mobile-link">Events</a>
+  <a href="gallery.html" class="nav__mobile-link">Gallery</a>
+  <a href="partners.html" class="nav__mobile-link">Partners</a>
+</div>
+
+<section class="partners-hero">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center;">
+      <div>
+        <div class="section-label reveal" style="margin-bottom:24px;"><div class="section-label__line" style="background:rgba(255,255,255,0.3)"></div><span class="section-label__text" style="color:rgba(255,255,255,0.5)">Partners</span></div>
+        <h1 class="t-h1 reveal reveal-delay-1" style="color:white; max-width:700px; margin-bottom:24px;">Built Together.<br><em class="t-serif-italic" style="color:var(--gold-light)">For Africa.</em></h1>
+        <p class="t-lead reveal reveal-delay-2" style="color:rgba(255,255,255,0.6); max-width:540px;">The AI UniPod is a collaborative achievement — made possible by the commitment of universities, government agencies, the United Nations, and the private sector.</p>
+      </div>
+      <div class="reveal reveal-delay-2" style="display: flex; align-items: center; justify-content: center;">
+        <svg width="180" height="180" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Handshake Icon -->
+          <g opacity="0.9">
+            <!-- Left hand/arm -->
+            <path d="M30 120 L50 100 L70 110 L90 100" stroke="rgba(255, 222, 89, 0.8)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M30 120 L25 140 L35 145 L50 130" stroke="rgba(255, 222, 89, 0.8)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            
+            <!-- Right hand/arm -->
+            <path d="M170 120 L150 100 L130 110 L110 100" stroke="rgba(30, 132, 194, 0.8)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M170 120 L175 140 L165 145 L150 130" stroke="rgba(30, 132, 194, 0.8)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            
+            <!-- Connecting handshake -->
+            <ellipse cx="100" cy="105" rx="25" ry="15" fill="rgba(255, 255, 255, 0.15)" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+            
+            <!-- Fingers interlocking -->
+            <path d="M85 100 L90 95 L95 100 L100 95 L105 100 L110 95 L115 100" stroke="rgba(255, 255, 255, 0.6)" stroke-width="3" stroke-linecap="round" fill="none"/>
+            
+            <!-- Sparkle effect -->
+            <circle cx="100" cy="70" r="3" fill="rgba(255, 222, 89, 0.9)"/>
+            <circle cx="115" cy="80" r="2" fill="rgba(255, 222, 89, 0.7)"/>
+            <circle cx="85" cy="80" r="2" fill="rgba(30, 132, 194, 0.7)"/>
+            <path d="M100 65 L100 75 M95 70 L105 70" stroke="rgba(255, 222, 89, 0.9)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label reveal"><div class="section-label__line"></div><span class="section-label__text">Our Partners</span></div>
+    <h2 class="t-h2 reveal reveal-delay-1" style="margin-bottom:80px; max-width:600px;">The Institutions<br><em class="t-serif-italic text-blue">Driving the Vision</em></h2>
+    <div id="partnersList">
+      <div style="padding:60px 0; color:var(--gray); text-align:center">Loading partners…</div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERSHIP CALLOUT -->
+<section class="section section--dark">
+  <div class="container text-center">
+    <div class="section-label reveal" style="justify-content:center;margin-bottom:24px;">
+      <div class="section-label__line" style="background:rgba(255,255,255,0.2)"></div>
+      <span class="section-label__text" style="color:rgba(255,255,255,0.4)">Collaborate</span>
+      <div class="section-label__line" style="background:rgba(255,255,255,0.2)"></div>
+    </div>
+    <h2 class="t-h2 reveal reveal-delay-1" style="color:white;margin-bottom:24px;max-width:600px;margin-left:auto;margin-right:auto;">Interested in Partnering<br><em class="t-serif-italic text-gold">with the AI UniPod?</em></h2>
+    <p class="t-lead reveal reveal-delay-2" style="color:rgba(255,255,255,0.6);max-width:480px;margin:0 auto 48px;">We welcome partnerships with industry, the private sector, civil society, and international organisations who share our commitment to inclusive AI development in Africa.</p>
+    <div class="flex flex-center gap-4 flex-wrap reveal reveal-delay-3">
+      <a href="https://www.undp.org/nigeria" target="_blank" class="btn btn--gold">Contact UNDP Nigeria</a>
+      <a href="https://unilag.edu.ng" target="_blank" class="btn btn--outline-white">Contact UNILAG</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div style="margin-bottom: 16px;">
+          <img src="images/unipods Logo.png" alt="UniPod Lagos" style="height: 60px; width: auto; filter: brightness(0) invert(1);">
+        </div>
+        <div style="font-family: var(--font-ui); font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; margin-bottom: 20px;">AI UniPod Lagos</div>
+        <p>Nigeria's first AI-themed University Innovation Pod. Situated at the University of Lagos, Akoka Campus, Commercial Road, Lagos.</p>
+        
+        <div style="margin-top: 32px;">
+          <h4 style="font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px;">Our Partners</h4>
+          <div class="footer__logos">
+            <img src="images/undp_logo.png" 
+                 alt="UNDP" 
+                 loading="lazy"
+                 style="height: 99px; width: auto;">
+            <img src="images/UNILAG LOGO.png" 
+                 alt="University of Lagos" 
+                 loading="lazy"
+                 style="height: 60px; width: auto;">
+            <a href="https://statehouse.gov.ng" target="_blank" rel="noopener">
+              <img src="images/Nigerias_Coat_of_arms.png" 
+                   alt="Federal Government of Nigeria" 
+                   loading="lazy"
+                   style="height: 65px; width: auto;">
+            </a>
+            <img src="images/tetfund_logo.png" 
+                 alt="TETFund" 
+                 loading="lazy"
+                 style="height: 99px; width: auto; filter: brightness(0) invert(1);">
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="programs.html#ai-solutions">AI Solutions for Africa</a></li>
+          <li><a href="programs.html#bootcamp">AI Innovation Bootcamp</a></li>
+          <li><a href="programs.html#startup">Startup Cohort</a></li>
+          <li><a href="programs.html#ide">Innovation Discovery</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://unilag.edu.ng" target="_blank" rel="noopener">UNILAG</a></li>
+          <li><a href="https://www.undp.org/nigeria" target="_blank" rel="noopener">UNDP Nigeria</a></li>
+          <li><a href="https://www.undp.org/africa/projects/timbuktoo" target="_blank" rel="noopener">Timbuktoo Initiative</a></li>
+          <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 AI UniPod Lagos. A UNILAG × UNDP Timbuktoo Initiative.</p>
+      <div class="footer__socials"><a href="#" class="footer__social">𝕏</a><a href="#" class="footer__social">IG</a><a href="#" class="footer__social">in</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/mock-data.js"></script>
+<script src="js/main.js"></script>
+<script>
+async function loadPartners() {
+  const container = document.getElementById('partnersList');
+  try {
+    const data = await API.get('partners', { limit: 50 });
+    const items = data.data.filter(p => p.published).sort((a,b) => (a.order||99) - (b.order||99));
+    if (!items.length) { container.innerHTML = '<p>No partners found.</p>'; return; }
+
+    const categories = [...new Set(items.map(p => p.category))];
+    container.innerHTML = categories.map(cat => `
+      <div style="margin-bottom:80px;">
+        <div class="section-label reveal" style="margin-bottom:40px;">
+          <div class="section-label__line"></div>
+          <span class="section-label__text">${cat}</span>
+        </div>
+        ${items.filter(p => p.category === cat).map(p => `
+          <div class="partner-full-card reveal">
+            <div class="partner-full-card__logo">
+              ${p.logo_url ? `<img src="${p.logo_url}" alt="${p.name}">` : ''}
+            </div>
+            <div>
+              <h3 class="partner-full-card__name">${p.name}</h3>
+              <div class="partner-full-card__cat">${p.category}</div>
+              <p class="partner-full-card__desc">${p.description || ''}</p>
+              ${p.website && p.website !== '#' ? `<a href="${p.website}" target="_blank" class="btn--ghost" style="margin-top:16px;display:inline-block">Visit Website</a>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => {
+        new IntersectionObserver(e => { if(e[0].isIntersecting) el.classList.add('visible'); }, {threshold:0.1}).observe(el);
+      });
+    }, 100);
+  } catch(e) {
+    container.innerHTML = '<p style="color:var(--gray)">Unable to load partners.</p>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadPartners);
+</script>
+</body>
+</html>
