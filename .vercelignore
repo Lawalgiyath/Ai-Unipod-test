@@ -1,0 +1,14 @@
+node_modules
+.git
+.env
+*.log
+.DS_Store
+images/
+docs/
+scripts/
+*.md
+!README.md
+upload-to-cloudinary.js
+update-image-urls.js
+cloudinary-urls.json
+CLOUDINARY_SETUP.md
