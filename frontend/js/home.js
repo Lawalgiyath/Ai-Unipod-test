@@ -576,29 +576,30 @@ async function loadNews() {
       return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     };
 
-    container.innerHTML = `
-      <div class="news-featured">
-        <a href="news.html#${first.slug || first.id}" class="news-item news-item--hero">
-          <img class="news-item__img" src="${first.cover_image || 'https://placehold.co/800x400/0468B1/white?text=News'}" alt="${first.title}" loading="lazy">
-          <div class="news-item__body">
-            <div class="news-item__date">${formatDate(first.published_date)} — <span class="tag tag--blue">${first.category || 'News'}</span></div>
-            <h3 class="news-item__title">${first.title}</h3>
-            <p class="news-item__excerpt">${first.excerpt || ''}</p>
-            <span class="btn--ghost">Read more</span>
-          </div>
-        </a>
-        <div class="news-secondary">
-          ${rest.map(item => `
-            <a href="news.html#${item.slug || item.id}" class="news-item news-item--small">
-              <div class="news-item__date">${formatDate(item.published_date)} — <span class="tag tag--blue">${item.category || 'News'}</span></div>
-              <h3 class="news-item__title">${item.title}</h3>
-              <p class="news-item__excerpt">${item.excerpt || ''}</p>
-              <span class="btn--ghost">Read more</span>
-            </a>
-          `).join('')}
+    // Write news directly into the container (which is #newsFeatured)
+    const heroItem = `
+      <a href="news.html#${first.slug || first.id}" class="news-item news-item--hero">
+        <img class="news-item__img" src="${first.cover_image || 'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'}" 
+             alt="${first.title}" loading="lazy"
+             onerror="this.src='https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'">
+        <div class="news-item__body">
+          <div class="news-item__date">${formatDate(first.published_date)} — <span class="tag tag--blue">${first.category || 'News'}</span></div>
+          <h3 class="news-item__title">${first.title}</h3>
+          <p class="news-item__excerpt">${(first.excerpt || '').substring(0, 200)}${first.excerpt && first.excerpt.length > 200 ? '…' : ''}</p>
+          <span class="btn--ghost">Read more</span>
         </div>
-      </div>
-    `;
+      </a>`;
+    
+    const secondaryItems = rest.slice(0, 3).map(item => `
+      <a href="news.html#${item.slug || item.id}" class="news-item news-item--small">
+        <div class="news-item__date">${formatDate(item.published_date)} — <span class="tag tag--blue">${item.category || 'News'}</span></div>
+        <h3 class="news-item__title">${item.title}</h3>
+        <p class="news-item__excerpt">${(item.excerpt || '').substring(0, 120)}${item.excerpt && item.excerpt.length > 120 ? '…' : ''}</p>
+        <span class="btn--ghost">Read more</span>
+      </a>
+    `).join('');
+    
+    container.innerHTML = heroItem + `<div class="news-secondary">${secondaryItems}</div>`;
   } catch (e) {
     console.error('News load error:', e);
   }
