@@ -8,15 +8,23 @@
 // ─── HERO WEBGL (Three.js Particle Field) ────────────────────
 function initHeroWebGL() {
   const canvas = document.getElementById('heroCanvas');
-  if (!canvas || typeof THREE === 'undefined') return;
+  const heroSection = document.querySelector('.hero');
+  if (!canvas || !heroSection || typeof THREE === 'undefined') return;
+
+  const getHeroSize = () => ({
+    width: heroSection.clientWidth,
+    height: heroSection.clientHeight
+  });
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  
+  let { width, height } = getHeroSize();
+  renderer.setSize(width, height);
   renderer.setClearColor(0x040E1E, 1);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
   camera.position.z = 80;
 
   // ── Particle field
@@ -108,9 +116,10 @@ function initHeroWebGL() {
   animate();
 
   window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const { width, height } = getHeroSize();
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
   });
 }
 

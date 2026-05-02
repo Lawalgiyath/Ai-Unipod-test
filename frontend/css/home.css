@@ -12,6 +12,7 @@
   overflow: hidden;
   z-index: 1;
   margin-bottom: 0;
+  background: #040e1e; /* matches WebGL clear color */
 }
 #heroCanvas {
   position: absolute;
@@ -787,10 +788,13 @@
   .hero {
     min-height: 100svh;
     min-height: 100vh;
-    padding-bottom: 0;
-    padding-top: 120px; /* slim mobile nav ~100px */
-    align-items: center;
+    padding-bottom: 80px;
+    padding-top: 0 !important;
+    align-items: flex-start; 
     height: auto;
+  }
+  .hero__content {
+    margin-top: 160px !important; /* guaranteed navbar clearance */
   }
   .hero__title { 
     font-size: clamp(2.2rem, 9vw, 3.8rem);
@@ -816,9 +820,13 @@
   .hero {
     min-height: 100svh;
     min-height: 100vh;
-    padding-bottom: 0;
-    padding-top: 110px;
+    padding-bottom: 60px;
+    padding-top: 0 !important;
+    align-items: flex-start;
     height: auto;
+  }
+  .hero__content {
+    margin-top: 150px !important;
   }
   .hero__title { 
     font-size: clamp(2rem, 11vw, 3rem);
@@ -919,8 +927,11 @@
 
 @media (max-width: 360px) {
   .hero {
-    padding-top: 100px;
-    padding-bottom: 40px;
+    padding-top: 0 !important;
+    padding-bottom: 60px;
+  }
+  .hero__content {
+    margin-top: 140px !important;
   }
   
   .hero__title {
