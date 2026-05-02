@@ -763,7 +763,7 @@
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .hero {
-    padding-top: 350px;
+    padding-top: 420px;
     align-items: flex-start;
   }
   
