@@ -1,26 +1,53 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontend/**",
-      "use": "@vercel/static"
-    }
-  ],
+  "public": true,
+  "github": {
+    "silent": true
+  },
   "routes": [
+    {
+      "src": "/images/(.*)",
+      "dest": "https://raw.githubusercontent.com/Lawalgiyath/Ai-Unipod-test/main/frontend/images/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/frontend/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/frontend/js/$1"
+    },
+    {
+      "src": "/(.*\\.(html|svg|ico))",
+      "dest": "/frontend/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/frontend/index.html"
+    },
     {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
   ],
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.html)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     }
-  },
-  "env": {
-    "SUPABASE_URL": "@supabase_url",
-    "SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "SUPABASE_SERVICE_KEY": "@supabase_service_key",
-    "ADMIN_EMAIL": "admin@unipod.unilag.edu.ng"
-  }
+  ]
 }
