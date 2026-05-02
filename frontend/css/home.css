@@ -6,7 +6,8 @@
   height: 100vh;
   min-height: 700px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  padding-top: 140px;
   padding-bottom: 100px;
   overflow: hidden;
   z-index: 1;
@@ -758,6 +759,11 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
+  .hero {
+    padding-top: 160px;
+    align-items: flex-start;
+  }
+  
   .story-layout { grid-template-columns: 1fr; gap: 60px; }
   .story-visual { display: none; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -775,7 +781,8 @@
   .hero {
     min-height: 600px;
     padding-bottom: 80px;
-    padding-top: 140px;
+    padding-top: 180px;
+    align-items: flex-start;
   }
   .hero__title { 
     font-size: clamp(2.5rem, 10vw, 4rem);
@@ -800,7 +807,7 @@
   .hero {
     min-height: 550px;
     padding-bottom: 60px;
-    padding-top: 120px;
+    padding-top: 160px;
   }
   .hero__title { 
     font-size: clamp(2rem, 9vw, 3rem);
@@ -901,7 +908,7 @@
 @media (max-width: 360px) {
   .hero {
     min-height: 500px;
-    padding-top: 100px;
+    padding-top: 140px;
     padding-bottom: 50px;
   }
   
