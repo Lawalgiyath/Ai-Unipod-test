@@ -369,6 +369,37 @@ button { cursor: pointer; border: none; background: none; }
   cursor: pointer;
 }
 
+/* ─── COMPACT NAVIGATION ─────────────────────────────────── */
+.nav--compact {
+  padding: 16px 0;
+}
+.nav--compact .nav__logo--compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1003;
+}
+.nav--compact .nav__logo--compact img {
+  height: 45px;
+  width: auto;
+}
+.nav--compact .nav__logo-text {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--near-black);
+}
+.nav--compact.scrolled {
+  padding: 12px 0;
+}
+.nav--compact .nav__links {
+  gap: 32px;
+}
+.nav--compact .nav__link {
+  font-size: 0.875rem;
+}
+
 /* ─── BUTTONS ────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
