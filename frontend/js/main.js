@@ -8,12 +8,23 @@
 function initLoader() {
   const loader = document.getElementById('loader');
   if (!loader) return;
-  window.addEventListener('load', () => {
-    setTimeout(() => {
+
+  const hideLoader = () => {
+    if (!loader.classList.contains('hidden')) {
       loader.classList.add('hidden');
       document.body.style.overflow = '';
-    }, 1400);
+      console.log('Loader hidden');
+    }
+  };
+
+  // Main trigger: window load
+  window.addEventListener('load', () => {
+    setTimeout(hideLoader, 800); // Small delay for smooth transition
   });
+
+  // Failsafe: hide after 6 seconds regardless
+  setTimeout(hideLoader, 6000);
+
   document.body.style.overflow = 'hidden';
 }
 
