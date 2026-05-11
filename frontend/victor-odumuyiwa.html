@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Victor Odumuyiwa — AI UniPod Lagos</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .profile-hero {
+      padding: 180px 0 100px;
+      background: var(--off-white);
+      min-height: 100vh;
+    }
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .profile-img-wrap {
+      position: sticky;
+      top: 120px;
+    }
+    .profile-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+    }
+    .profile-name {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .profile-role {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--unipods-blue);
+      margin-bottom: 40px;
+      font-weight: 600;
+    }
+    .profile-bio p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--dark-gray);
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      .profile-layout { grid-template-columns: 1fr; gap: 40px; }
+      .profile-img-wrap { position: relative; top: 0; max-width: 400px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav nav--light scrolled" style="background: rgba(255,255,255,0.96); padding: 12px 0;">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" style="opacity: 1; animation: none;">
+        <div class="nav__logo-primary">
+          <img src="https://res.cloudinary.com/dxeddg9wf/image/upload/f_auto,q_auto/unipod/unipods%20Logo.png" alt="UniPod Lagos" style="height: 45px;">
+        </div>
+      </a>
+      <a href="index.html" class="btn btn--outline" style="opacity: 1; animation: none;">&larr; Back to Home</a>
+    </div>
+  </div>
+</nav>
+
+<section class="profile-hero">
+  <div class="container">
+    <div class="profile-layout">
+      <div class="profile-img-wrap">
+        <img src="https://raw.githubusercontent.com/Lawalgiyath/Ai-Unipod-test/main/frontend/images/adminster/odumuyiwa.png" alt="Dr. Victor Odumuyiwa" class="profile-img">
+      </div>
+      <div>
+        <h1 class="profile-name">Dr. Victor Odumuyiwa</h1>
+        <div class="profile-role">Director, Nithub UNILAG / UniPod Focal Point</div>
+        <div class="profile-bio">
+          <p>Dr. Victor Odumuyiwa holds a PhD from Lorraine University, France, and is an MIT ETT Fellow. He serves as the Director of the NITDA IT Hub (Nithub) at the University of Lagos.</p><p>As the Principal Investigator for the EduAIHub project and the operational lead of the UNILAG AI UniPod, Dr. Odumuyiwa is a relentless champion of AI education and practical innovation in Nigeria.</p><p>He oversees the day-to-day execution of the UniPod's programs, ensuring that students and researchers have the tools, mentorship, and environment they need to succeed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

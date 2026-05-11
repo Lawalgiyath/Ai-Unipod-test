@@ -4,7 +4,7 @@
   "description": "Official website for AI UniPod Lagos - Nigeria's first AI-themed University Innovation Pod",
   "main": "index.html",
   "scripts": {
-    "dev": "python -m http.server 8000",
+    "dev": "cd frontend && python -m http.server 8000",
     "serve": "npx serve .",
     "deploy:vercel": "vercel --prod",
     "deploy:netlify": "netlify deploy --prod",
