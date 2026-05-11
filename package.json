@@ -4,7 +4,10 @@
   "description": "Official website for AI UniPod Lagos - Nigeria's first AI-themed University Innovation Pod",
   "main": "index.html",
   "scripts": {
+<<<<<<< Updated upstream
     "build": "echo 'Building AI UniPod Lagos...'",
+=======
+>>>>>>> Stashed changes
     "dev": "cd frontend && python -m http.server 8000",
     "serve": "npx serve .",
     "deploy:vercel": "vercel --prod",
