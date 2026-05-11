@@ -4,44 +4,18 @@
   "github": {
     "silent": true
   },
-  "routes": [
+  "outputDirectory": "frontend",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
     {
-      "src": "/images/(.*)",
-      "dest": "https://raw.githubusercontent.com/Lawalgiyath/Ai-Unipod-test/main/frontend/images/$1"
-    },
-    {
-      "src": "/css/(.*)",
-      "dest": "/frontend/css/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/frontend/js/$1"
-    },
-    {
-      "src": "/(.*\\.(html|svg|ico))",
-      "dest": "/frontend/$1"
-    },
-    {
-      "src": "/",
-      "dest": "/frontend/index.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "source": "/images/(.*)",
+      "destination": "https://raw.githubusercontent.com/Lawalgiyath/Ai-Unipod-test/main/frontend/images/$1"
     }
   ],
   "headers": [
     {
       "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/(.*\\.html)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -51,3 +25,5 @@
     }
   ]
 }
+
+

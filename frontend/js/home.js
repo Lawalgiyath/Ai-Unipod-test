@@ -574,41 +574,42 @@ async function loadNews() {
   if (!container) return;
 
   try {
-    const data = await API.get('news', { limit: 4, sort: '-published_date' });
+    const data = await API.get('news', { limit: 3, sort: '-published_date' });
     const items = data.data.filter(i => i.published);
     if (!items.length) return;
-
-    const [first, ...rest] = items;
 
     const formatDate = (d) => {
       if (!d) return '';
       return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     };
 
-    // Write news directly into the container (which is #newsFeatured)
-    const heroItem = `
-      <a href="news.html#${first.slug || first.id}" class="news-item news-item--hero">
-        <img class="news-item__img" src="${first.cover_image || 'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'}" 
-             alt="${first.title}" loading="lazy"
-             onerror="this.src='https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'">
-        <div class="news-item__body">
-          <div class="news-item__date">${formatDate(first.published_date)} — <span class="tag tag--blue">${first.category || 'News'}</span></div>
-          <h3 class="news-item__title">${first.title}</h3>
-          <p class="news-item__excerpt">${(first.excerpt || '').substring(0, 200)}${first.excerpt && first.excerpt.length > 200 ? '…' : ''}</p>
-          <span class="btn--ghost">Read more</span>
+    const cardsHtml = items.slice(0, 3).map(item => `
+      <a href="#news-post" class="news-item news-item--insight">
+        <div class="news-item__img-wrap" style="height: 240px; overflow: hidden; margin-bottom: 24px; border-radius: 4px;">
+          <img src="${item.cover_image || 'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
-      </a>`;
-    
-    const secondaryItems = rest.slice(0, 3).map(item => `
-      <a href="news.html#${item.slug || item.id}" class="news-item news-item--small">
-        <div class="news-item__date">${formatDate(item.published_date)} — <span class="tag tag--blue">${item.category || 'News'}</span></div>
-        <h3 class="news-item__title">${item.title}</h3>
-        <p class="news-item__excerpt">${(item.excerpt || '').substring(0, 120)}${item.excerpt && item.excerpt.length > 120 ? '…' : ''}</p>
-        <span class="btn--ghost">Read more</span>
+        <div class="news-item__meta" style="font-family: var(--font-ui); font-size: 0.8rem; color: var(--gray); margin-bottom: 12px;">
+          ${formatDate(item.published_date)} • 4 min read
+        </div>
+        <h3 class="news-item__title" style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3;">
+          ${item.title}
+        </h3>
+        <p class="news-item__excerpt" style="font-size: 0.9rem; color: var(--dark-gray); line-height: 1.6; margin-bottom: 24px;">
+          ${(item.excerpt || '').substring(0, 100)}${item.excerpt && item.excerpt.length > 100 ? '...' : ''}
+        </p>
+        <div class="news-item__readmore" style="font-family: var(--font-ui); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--unipods-blue); display: flex; align-items: center; gap: 8px;">
+          Read More 
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </a>
     `).join('');
     
-    container.innerHTML = heroItem + `<div class="news-secondary">${secondaryItems}</div>`;
+    container.innerHTML = cardsHtml;
+    // Overwrite the CSS grid inline since we are replacing it
+    container.style.display = 'grid';
+    container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    container.style.gap = '24px';
+    container.style.background = 'transparent';
   } catch (e) {
     console.error('News load error:', e);
   }
@@ -711,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGalleryStrip();
   loadPrograms();
   loadNews();
-  loadEvents();
+  // loadEvents(); // Removed as per user request
   loadPartners();
 
   // Counter animation for stats
