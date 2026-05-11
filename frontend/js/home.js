@@ -586,7 +586,7 @@ async function loadNews() {
     const cardsHtml = items.slice(0, 3).map(item => `
       <a href="#news-post" class="news-item news-item--insight">
         <div class="news-item__img-wrap" style="height: 240px; overflow: hidden; margin-bottom: 24px; border-radius: 4px;">
-          <img src="${item.cover_image || 'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;">
+          <img src="${item.cover_image || 'https://unilag.edu.ng/wp-content/uploads/2026/03/photo_2_2026-03-11_09-17-05-1024x918.jpg'}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
         </div>
         <div class="news-item__meta" style="font-family: var(--font-ui); font-size: 0.8rem; color: var(--gray); margin-bottom: 12px;">
           ${formatDate(item.published_date)} • 4 min read
@@ -690,9 +690,8 @@ async function loadPartners() {
     container.innerHTML = items.map(item => `
       <a href="${item.website || '#'}" target="_blank" rel="noopener" class="partner-logo-item">
         ${item.logo_url
-          ? `<img src="${item.logo_url}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-             <span class="partner-name-fallback" style="display:none">${item.name}</span>`
-          : `<span class="partner-name-fallback">${item.name}</span>`
+          ? `<img src="${item.logo_url}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">`
+          : `<span class="partner-name-fallback" style="display:none">${item.name}</span>`
         }
       </a>
     `).join('');
